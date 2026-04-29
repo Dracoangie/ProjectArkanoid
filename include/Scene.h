@@ -27,7 +27,7 @@ public:
 	/**
 	 * Calls the update method of the game objects.
 	 */
-	virtual void update() = 0;
+	virtual void update(float deltaTime) = 0;
 
 	/**
 	 * Calls the render method of the game objects.

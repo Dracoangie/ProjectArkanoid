@@ -2,13 +2,13 @@
 #pragma once
 #include "Entity.h"
 
-class Ball : public Entity
+class Bar : public Entity
 {
 	float speed = 200;
 
 public:
-	Ball();
-	~Ball();
+	Bar();
+	~Bar();
 	void start(SDL_Renderer* renderer) override;
 	void update(float deltaTime) override;
 	void render(SDL_Renderer* renderer) override;

@@ -18,7 +18,7 @@ public:
     void start(SDL_Renderer* renderer) override;
 
     
-    void update() override;
+    void update(float deltaTime) override;
 
     void render(SDL_Renderer* renderer) override;
 };

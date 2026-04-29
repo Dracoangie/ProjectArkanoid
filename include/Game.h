@@ -6,14 +6,15 @@
 #include "Scene.h"
 #include <GameScene.h>
 
-constexpr auto WINDOW_WIDTH = 800;
-constexpr auto WINDOW_HEIGHT = 600;
+constexpr auto WINDOW_WIDTH = 1200;
+constexpr auto WINDOW_HEIGHT = 800;
 
 class Game
 {
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	std::unique_ptr<Scene> currentScene;
+	std::shared_ptr<Scene> currentScene;
+	std::shared_ptr<Scene> lastScene;
 
 public:
 	Game();
@@ -27,6 +28,11 @@ public:
 	 * Starts the main game loop, which continues until the game is closed. Inside the loop, it handles events, updates the current scene and renders it.
 	 */
 	void run();
+
+	/**
+	 * Changes the current scene to a new scene. The new scene will be started and rendered in the next iteration of the game loop.
+	 */
+	void changeScene(std::shared_ptr<Scene> newScene);
 
 	/**
 	 * Cleans up resources used by the game, including the SDL window and renderer.

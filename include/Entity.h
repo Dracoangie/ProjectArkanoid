@@ -12,10 +12,8 @@
 
 struct Transform
 {
-	int x;
-	int y;
-	int width;
-	int height;
+	float x, y;
+	int w, h;
 };
 
 class Entity
@@ -44,7 +42,7 @@ public:
 	/**
 	 * Is called every frame to update the entity's state.
 	 */
-	virtual void update() = 0;
+	virtual void update(float deltaTime) = 0;
 
 	/**
 	 * Is called every frame to render the entity on the screen.

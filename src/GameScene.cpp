@@ -21,10 +21,10 @@ void GameScene::start(SDL_Renderer* renderer)
 		entity.second->start(renderer);
 }
 
-void GameScene::update()
+void GameScene::update(float deltaTime)
 {
 	for (auto& entity : entities)
-		entity.second->update();
+		entity.second->update(deltaTime);
 }
 
 void GameScene::render(SDL_Renderer* renderer)

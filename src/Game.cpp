@@ -5,10 +5,10 @@ Game::Game()
 	if (!init())
 		exit(1);
 
-	currentScene = std::make_unique<GameScene>();
+	lastScene = nullptr;
+	currentScene = std::make_shared<GameScene>();
 	if (!currentScene->init())
 		exit(1);
-	currentScene->start(renderer);
 }
 
 Game::~Game()
@@ -33,14 +33,29 @@ bool Game::init()
 
 void Game::run()
 {
+	Uint64 lastTime = SDL_GetTicks64();
 	bool running = true;
 	while (running)
 	{
+		Uint64 currentTime = SDL_GetTicks64();
+		float deltaTime = (currentTime - lastTime) / 1000.0f;
+		lastTime = currentTime;
 		handleEvents();
 
-		currentScene->update();
+		if (currentScene != lastScene)
+		{
+			currentScene->start(renderer);
+			lastScene = currentScene;
+		}
+
+		currentScene->update(deltaTime);
 		currentScene->render(renderer);
 	}
+}
+
+void Game::changeScene(std::shared_ptr<Scene> newScene)
+{
+	currentScene = newScene;
 }
 
 void Game::cleanup()
