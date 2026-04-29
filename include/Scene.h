@@ -5,6 +5,8 @@
 #include <SDL_image.h>
 #include "Entity.h"
 #include "Ball.h"
+#include "Bar.h"
+
 
 class Scene
 {

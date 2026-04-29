@@ -11,6 +11,7 @@ GameScene::~GameScene()
 bool GameScene::init()
 {
 	entities["ball"] = std::make_unique<Ball>();
+	entities["bar"] = std::make_unique<Bar>();
 
 	return true;
 }
