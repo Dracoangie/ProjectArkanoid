@@ -2,8 +2,8 @@
 
 Ball::Ball()
 {
-    transform.x = 0;
-    transform.y = 0;
+    transform.x = WINDOW_WIDTH / 2;
+    transform.y = 10;
     transform.w = 16;
     transform.h = 18;
 }
@@ -20,8 +20,19 @@ void Ball::start(SDL_Renderer* renderer)
 
 void Ball::update(float deltaTime)
 {
-    transform.x += speed * deltaTime;
-    transform.y += speed * deltaTime;
+	Transform collisionTransform = 
+    {
+        transform.x + speedX * deltaTime,
+        transform.y + speedY * deltaTime,
+        transform.w,
+		transform.h
+    };
+    if (CollisionWalls(&collisionTransform))
+        speedX = -speedX;
+    if (transform.y < 3)
+        speedY = -speedY;
+    transform.x += speedX * deltaTime;
+    transform.y += speedY * deltaTime;
 }
 
 void Ball::render(SDL_Renderer* renderer)

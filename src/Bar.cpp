@@ -2,15 +2,14 @@
 
 Bar::Bar()
 {
-	transform.x = 600;
-	transform.y = 700;
-	transform.w = 100;
-	transform.h = 40;
+	transform.x = WINDOW_WIDTH / 2 - 50;
+	transform.y = WINDOW_HEIGHT - 50;
+	transform.w = 80;
+	transform.h = 20;
 }
 
 Bar::~Bar()
 {
-	SDL_DestroyTexture(texture);
 }
 
 void Bar::start(SDL_Renderer* renderer)
@@ -21,9 +20,9 @@ void Bar::start(SDL_Renderer* renderer)
 void Bar::update(float deltaTime)
 {
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-	if (keystate[SDL_SCANCODE_LEFT])
+	if (keystate[SDL_SCANCODE_LEFT] && transform.x > 10)
 		transform.x -= speed * deltaTime;
-	if (keystate[SDL_SCANCODE_RIGHT])
+	if (keystate[SDL_SCANCODE_RIGHT] && transform.x + transform.w < WINDOW_WIDTH - 9)
 		transform.x += speed * deltaTime;
 }
 

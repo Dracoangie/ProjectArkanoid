@@ -7,7 +7,7 @@
 
 class GameScene : public Scene
 {
-    
+    SDL_Texture* backgroundTexture = nullptr;
 
 public:
     GameScene();

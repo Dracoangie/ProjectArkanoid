@@ -44,5 +44,8 @@
     <ClInclude Include="include\Bar.h">
       <Filter>includes</Filter>
     </ClInclude>
+    <ClInclude Include="include\Utils.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

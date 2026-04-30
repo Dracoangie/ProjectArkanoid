@@ -1,13 +1,8 @@
 #pragma once
 
-#include <SDL.h>
-#include <SDL_image.h>
-
 #include "Scene.h"
+#include "Utils.h"
 #include <GameScene.h>
-
-constexpr auto WINDOW_WIDTH = 1200;
-constexpr auto WINDOW_HEIGHT = 800;
 
 class Game
 {

@@ -4,7 +4,8 @@
 
 class Ball : public Entity
 {
-	float speed = 200;
+	float speedX = 200;
+	float speedY = 200;
 
 public:
 	Ball();

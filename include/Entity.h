@@ -1,20 +1,7 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <memory>
-#include <algorithm>
-#include <map>
 
-#include <SDL.h>
-#include <SDL_image.h>
-
-struct Transform
-{
-	float x, y;
-	int w, h;
-};
+#include "Utils.h"
 
 class Entity
 {
@@ -31,7 +18,10 @@ public:
 	 */
 	Transform transform;
 
-	virtual ~Entity() {}
+	virtual ~Entity()
+	{
+		SDL_DestroyTexture(texture);
+	}
 
 	/**
 	 * Is called once when the entity is added to the scene. 

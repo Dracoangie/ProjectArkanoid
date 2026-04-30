@@ -6,12 +6,18 @@
 #include "Entity.h"
 #include "Ball.h"
 #include "Bar.h"
+#include <unordered_map>
 
+struct Color
+{
+	Uint8 r, g, b, a;
+};
 
 class Scene
 {
 protected:
-	std::map<std::string, std::unique_ptr<Entity>> entities;
+	std::unordered_map<std::string, std::unique_ptr<Entity>> entities;
+	Color backgroundColor = { 40, 44, 60, 255 };
 
 public:
 	virtual ~Scene() {}
