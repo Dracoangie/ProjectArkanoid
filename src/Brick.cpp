@@ -28,12 +28,20 @@ Brick::Brick(int x, int y, int type)
 
 Brick::~Brick()
 {
-	SDL_DestroyTexture(texture);
+	for (int i = 1; i <= 4; i++) {
+		if (brickTextures[i])
+			SDL_DestroyTexture(brickTextures[i]);
+	}
 }
 
 void Brick::start(SDL_Renderer* renderer)
 {
-	texture = IMG_LoadTexture(renderer, ("assets/Brick" + std::to_string(type) + ".png").c_str());
+	for (int i = 1; i <= 4; i++) {
+		if (brickTextures[i] == nullptr) {
+			std::string path = "assets/Brick" + std::to_string(i) + ".png";
+			brickTextures[i] = IMG_LoadTexture(renderer, path.c_str());
+		}
+	}
 }
 
 void Brick::update(float deltaTime)
@@ -50,5 +58,5 @@ void Brick::render(SDL_Renderer* renderer)
 		transform.w,
 		transform.h
 	};
-	SDL_RenderCopy(renderer, texture, NULL, &transformRect);
+	SDL_RenderCopy(renderer, brickTextures[type], NULL, &transformRect);
 }

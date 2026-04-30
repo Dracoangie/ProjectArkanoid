@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\Bar.cpp" />
+    <ClCompile Include="src\Brick.cpp" />
+    <ClCompile Include="src\BrickPool.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\ProjectArkanoid.cpp" />
@@ -28,9 +30,12 @@
   <ItemGroup>
     <ClInclude Include="include\Ball.h" />
     <ClInclude Include="include\Bar.h" />
+    <ClInclude Include="include\Brick.h" />
+    <ClInclude Include="include\BrickPool.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameScene.h" />
+    <ClInclude Include="include\LevelData.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Utils.h" />
   </ItemGroup>

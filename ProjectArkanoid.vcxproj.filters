@@ -24,6 +24,12 @@
     <ClCompile Include="src\Bar.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Brick.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BrickPool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -45,6 +51,15 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="include\Utils.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Brick.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BrickPool.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LevelData.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

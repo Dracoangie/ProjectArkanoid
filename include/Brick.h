@@ -3,6 +3,7 @@
 class Brick : public Entity
 {
 	int type = 1; // 1 for normal brick, 2 for strong brick, etc.
+	SDL_Texture* brickTextures[5] = { nullptr, nullptr, nullptr, nullptr, nullptr };
 public:
 	bool active = true;
 
@@ -16,5 +17,6 @@ public:
 	void render(SDL_Renderer* renderer) override;
 
 	int getType() { return type; }
+	void setType(int newType){ type = newType; }
 };
 

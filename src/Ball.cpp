@@ -10,7 +10,6 @@ Ball::Ball()
 
 Ball::~Ball()
 {
-    SDL_DestroyTexture(texture);
 }
 
 void Ball::start(SDL_Renderer* renderer)

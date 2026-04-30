@@ -6,6 +6,7 @@
 
 class Game
 {
+	bool running = true;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	std::shared_ptr<Scene> currentScene;

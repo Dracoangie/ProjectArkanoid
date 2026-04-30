@@ -20,7 +20,8 @@ public:
 
 	virtual ~Entity()
 	{
-		SDL_DestroyTexture(texture);
+		if(texture)
+			SDL_DestroyTexture(texture);
 	}
 
 	/**

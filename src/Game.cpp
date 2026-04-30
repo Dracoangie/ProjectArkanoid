@@ -34,7 +34,6 @@ bool Game::init()
 void Game::run()
 {
 	Uint64 lastTime = SDL_GetTicks64();
-	bool running = true;
 	while (running)
 	{
 		Uint64 currentTime = SDL_GetTicks64();
@@ -73,8 +72,8 @@ void Game::handleEvents()
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
-			exit(0);
+			running = false;
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
-			exit(0);
+			running = false;
 	}
 }

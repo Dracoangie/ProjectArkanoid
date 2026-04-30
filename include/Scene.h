@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include "Ball.h"
 #include "Bar.h"
+#include "BrickPool.h"
 #include <unordered_map>
 
 struct Color

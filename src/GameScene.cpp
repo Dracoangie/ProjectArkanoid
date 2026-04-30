@@ -14,6 +14,7 @@ bool GameScene::init()
 {
 	entities["ball"] = std::make_unique<Ball>();
 	entities["bar"] = std::make_unique<Bar>();
+	entities["brickPool"] = std::make_unique<BrickPool>();
 
 	return true;
 }
@@ -23,8 +24,15 @@ void GameScene::start(SDL_Renderer* renderer)
 	backgroundTexture = IMG_LoadTexture(renderer, "assets/Background.png");
 	for (auto& entity : entities)
 		entity.second->start(renderer);
-}
 
+	// Load the level data into the brick pool
+	if (entities["brickPool"])
+	{
+		auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
+		if (brickPool)
+			brickPool->loadLevel(Levels::LEVEL_1);
+	}
+}
 void GameScene::update(float deltaTime)
 {
 	for (auto& entity : entities)
