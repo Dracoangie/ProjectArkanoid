@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ball.cpp" />
+    <ClCompile Include="src\BallPool.cpp" />
     <ClCompile Include="src\Bar.cpp" />
     <ClCompile Include="src\Brick.cpp" />
     <ClCompile Include="src\BrickPool.cpp" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Ball.h" />
+    <ClInclude Include="include\BallPool.h" />
     <ClInclude Include="include\Bar.h" />
     <ClInclude Include="include\Brick.h" />
     <ClInclude Include="include\BrickPool.h" />

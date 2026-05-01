@@ -4,6 +4,7 @@
 
 class Bar : public Entity
 {
+	float basicSpeed = 400;
 	float speed = 400;
 
 public:

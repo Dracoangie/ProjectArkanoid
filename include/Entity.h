@@ -16,7 +16,7 @@ public:
 	/**
 	 * The transform component of the entity, containing its position and size.
 	 */
-	Transform transform;
+	Transform transform{0,0,0,0};
 
 	virtual ~Entity()
 	{

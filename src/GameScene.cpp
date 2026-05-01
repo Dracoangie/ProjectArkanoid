@@ -12,7 +12,7 @@ GameScene::~GameScene()
 
 bool GameScene::init()
 {
-	entities["ball"] = std::make_unique<Ball>();
+	entities["ballPool"] = std::make_unique<BallPool>();
 	entities["bar"] = std::make_unique<Bar>();
 	entities["brickPool"] = std::make_unique<BrickPool>();
 
@@ -25,7 +25,6 @@ void GameScene::start(SDL_Renderer* renderer)
 	for (auto& entity : entities)
 		entity.second->start(renderer);
 
-	// Load the level data into the brick pool
 	if (entities["brickPool"])
 	{
 		auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
@@ -35,6 +34,7 @@ void GameScene::start(SDL_Renderer* renderer)
 }
 void GameScene::update(float deltaTime)
 {
+	checkCollisions(deltaTime);
 	for (auto& entity : entities)
 		entity.second->update(deltaTime);
 }
@@ -53,4 +53,43 @@ void GameScene::render(SDL_Renderer* renderer)
 		entity.second->render(renderer);
 
 	SDL_RenderPresent(renderer);
+}
+
+void GameScene::checkCollisions(float deltaTime)
+{
+	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
+	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
+
+	for (auto& ball : ballPool->getActiveBalls())
+	{
+		if (!ball->isActive())
+			continue;
+
+		for (auto& brick : brickPool->getActiveBricks())
+		{
+			if (!brick->active)
+				continue;
+
+			if (CollisionCheck(&ball->transform, &brick->transform))
+			{
+				brick->active = false;
+
+				float prevX = ball->transform.x - ball->getSpeedX() * deltaTime;
+				float prevY = ball->transform.y - ball->getSpeedY() * deltaTime;
+
+				bool wasAbove = prevY + ball->transform.h <= brick->transform.y;
+				bool wasBelow = prevY >= brick->transform.y + brick->transform.h;
+				bool wasLeft = prevX + ball->transform.w <= brick->transform.x;
+				bool wasRight = prevX >= brick->transform.x + brick->transform.w;
+
+				if (wasAbove || wasBelow)
+					ball->setSpeedY(-ball->getSpeedY());
+				else if (wasLeft || wasRight)
+					ball->setSpeedX(-ball->getSpeedX());
+				else
+					ball->setSpeedY(-ball->getSpeedY());
+				break;
+			}
+		}
+	}
 }

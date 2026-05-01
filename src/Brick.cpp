@@ -1,5 +1,7 @@
 #include "Brick.h"
 
+SDL_Texture* Brick::brickTextures[5] = { nullptr };
+
 Brick::Brick()
 {
 	transform.x = 10;
@@ -28,20 +30,12 @@ Brick::Brick(int x, int y, int type)
 
 Brick::~Brick()
 {
-	for (int i = 1; i <= 4; i++) {
-		if (brickTextures[i])
-			SDL_DestroyTexture(brickTextures[i]);
-	}
+	Brick::destroyTextures();
 }
 
 void Brick::start(SDL_Renderer* renderer)
 {
-	for (int i = 1; i <= 4; i++) {
-		if (brickTextures[i] == nullptr) {
-			std::string path = "assets/Brick" + std::to_string(i) + ".png";
-			brickTextures[i] = IMG_LoadTexture(renderer, path.c_str());
-		}
-	}
+	Brick::loadTextures(renderer);
 }
 
 void Brick::update(float deltaTime)
@@ -59,4 +53,28 @@ void Brick::render(SDL_Renderer* renderer)
 		transform.h
 	};
 	SDL_RenderCopy(renderer, brickTextures[type], NULL, &transformRect);
+}
+
+void Brick::loadTextures(SDL_Renderer* renderer)
+{
+	if (brickTextures[1] != nullptr)
+		return;
+
+	for (int i = 1; i <= 4; i++)
+	{
+		std::string path = "assets/Brick" + std::to_string(i) + ".png";
+		brickTextures[i] = IMG_LoadTexture(renderer, path.c_str());
+	}
+}
+
+void Brick::destroyTextures()
+{
+	for (int i = 1; i <= 4; i++)
+	{
+		if (brickTextures[i])
+		{
+			SDL_DestroyTexture(brickTextures[i]);
+			brickTextures[i] = nullptr;
+		}
+	}
 }

@@ -30,6 +30,7 @@ void BrickPool::render(SDL_Renderer* renderer)
 
 void BrickPool::loadLevel(const std::vector<std::vector<int>>& levelData)
 {
+	reset();
 	for (int row = 0; row < rows; row++)
 	{
 		for (int col = 0; col < cols; col++)
@@ -52,5 +53,16 @@ void BrickPool::loadLevel(const std::vector<std::vector<int>>& levelData)
 void BrickPool::reset()
 {
 	for (auto& brick : bricks)
-		brick->active = false;
+		brick->active = true;
+}
+
+std::vector<Brick*> BrickPool::getActiveBricks()
+{
+	std::vector<Brick*> activeBricks;
+	for (auto& brick : bricks)
+	{
+		if (brick->active)
+			activeBricks.push_back(brick.get());
+	}
+	return activeBricks;
 }

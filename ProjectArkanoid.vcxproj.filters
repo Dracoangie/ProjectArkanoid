@@ -30,6 +30,9 @@
     <ClCompile Include="src\BrickPool.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\BallPool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -60,6 +63,9 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="include\LevelData.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BallPool.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

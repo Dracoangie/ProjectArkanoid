@@ -3,7 +3,7 @@
 class Brick : public Entity
 {
 	int type = 1; // 1 for normal brick, 2 for strong brick, etc.
-	SDL_Texture* brickTextures[5] = { nullptr, nullptr, nullptr, nullptr, nullptr };
+	static  SDL_Texture* brickTextures[5]; // Static array to hold textures for different brick types
 public:
 	bool active = true;
 
@@ -18,5 +18,14 @@ public:
 
 	int getType() { return type; }
 	void setType(int newType){ type = newType; }
+
+	/**
+	* Loads the textures for all brick types.
+	*/
+	static void loadTextures(SDL_Renderer* renderer);
+	/**
+	* Destroys the textures for all brick types. 
+	*/
+	static void destroyTextures();
 };
 
