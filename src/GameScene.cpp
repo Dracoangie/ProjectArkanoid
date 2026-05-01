@@ -34,7 +34,8 @@ void GameScene::start(SDL_Renderer* renderer)
 }
 void GameScene::update(float deltaTime)
 {
-	checkCollisions(deltaTime);
+	checkBrickCollisions(deltaTime);
+	checkBarCollisions(deltaTime);
 	for (auto& entity : entities)
 		entity.second->update(deltaTime);
 }
@@ -55,24 +56,23 @@ void GameScene::render(SDL_Renderer* renderer)
 	SDL_RenderPresent(renderer);
 }
 
-void GameScene::checkCollisions(float deltaTime)
+void GameScene::checkBrickCollisions(float deltaTime)
 {
 	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
 	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
 
 	for (auto& ball : ballPool->getActiveBalls())
 	{
-		if (!ball->isActive())
-			continue;
+		bool collided = false;
 
 		for (auto& brick : brickPool->getActiveBricks())
 		{
-			if (!brick->active)
-				continue;
+			if (collided)
+				break;
 
 			if (CollisionCheck(&ball->transform, &brick->transform))
 			{
-				brick->active = false;
+				brick->destroyBrick();
 
 				float prevX = ball->transform.x - ball->getSpeedX() * deltaTime;
 				float prevY = ball->transform.y - ball->getSpeedY() * deltaTime;
@@ -88,8 +88,43 @@ void GameScene::checkCollisions(float deltaTime)
 					ball->setSpeedX(-ball->getSpeedX());
 				else
 					ball->setSpeedY(-ball->getSpeedY());
-				break;
+
+				collided = true;
 			}
+		}
+	}
+}
+
+void GameScene::checkBarCollisions(float deltaTime)
+{
+	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
+	auto bar = dynamic_cast<Bar*>(entities["bar"].get());
+
+	for (auto& ball : ballPool->getActiveBalls())
+	{
+		if (ball->getSpeedY() <= 0)
+			continue;
+
+		if (CollisionCheck(&ball->transform, &bar->transform))
+		{
+			ball->transform.y = bar->transform.y - ball->transform.h;
+
+			ball->setSpeedY(-std::abs(ball->getSpeedY()));
+
+			float barCenterX = bar->transform.x + bar->transform.w / 2.0f;
+			float ballCenterX = ball->transform.x + ball->transform.w / 2.0f;
+
+			float distanceFromCenter = ballCenterX - barCenterX;
+			float maxDistance = bar->transform.w / 2.0f;
+
+			float normalizedDistance = distanceFromCenter / maxDistance;
+
+			if (normalizedDistance < -1.0f)
+				normalizedDistance = -1.0f;
+			else if (normalizedDistance > 1.0f)
+				normalizedDistance = 1.0f;
+
+			ball->setSpeedX(normalizedDistance * 400.0f);
 		}
 	}
 }

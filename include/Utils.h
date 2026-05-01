@@ -21,29 +21,15 @@ struct Transform
 	int w, h;
 };
 
-inline bool CollisionCheck(Transform* entity1, Transform* entity2)
+inline bool CollisionCheck(const Transform* a, Transform* b)
 {
-	SDL_Rect rect1 = {
-		(int)entity1->x,
-		(int)entity1->y,
-		entity1->w,
-		entity1->h
-	};
-	SDL_Rect rect2 = {
-		(int)entity2->x,
-		(int)entity2->y,
-		entity2->w,
-		entity2->h
-	};
-	if (SDL_HasIntersection(&rect1, &rect2))
-	{
-		std::cout << "Collision detected!" << std::endl;
-		return true;
-	}
-	return false;
+	return a->x < b->x + b->w &&
+		a->x + a->w > b->x &&
+		a->y < b->y + b->h &&
+		a->y + a->h > b->y;
 }
 
-inline bool CollisionWalls(Transform* entity)
+inline bool CollisionWalls(const Transform* entity)
 {
 	if (entity->x < 9 || entity->x + entity->w > WINDOW_WIDTH - 9)
 		return true;

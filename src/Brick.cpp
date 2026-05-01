@@ -1,6 +1,7 @@
 #include "Brick.h"
 
 SDL_Texture* Brick::brickTextures[5] = { nullptr };
+SDL_Texture* Brick::brickDestroyedTexture = nullptr;
 
 Brick::Brick()
 {
@@ -40,19 +41,55 @@ void Brick::start(SDL_Renderer* renderer)
 
 void Brick::update(float deltaTime)
 {
+	if (!destroyed)
+		return;
+
+	destructionTimer += deltaTime;
+
+	destructionFrame = (int)(destructionTimer / 0.1f);
+
+	if (destructionFrame >= 5)
+	{
+		active = false;
+		destroyed = false;
+		destructionFrame = 0;
+		destructionTimer = 0.0f;
+	}
 }
 
 void Brick::render(SDL_Renderer* renderer)
 {
-	if(!active)
+	if (!active && !destroyed)
 		return;
-	SDL_Rect transformRect = {
+
+	SDL_Rect dstRect = {
 		(int)transform.x,
 		(int)transform.y,
 		transform.w,
 		transform.h
 	};
-	SDL_RenderCopy(renderer, brickTextures[type], NULL, &transformRect);
+
+	if (destroyed)
+	{
+		SDL_Rect srcRect = {
+			160 * destructionFrame,
+			0,
+			transform.w * 3.32f,
+			transform.h * 3.32f
+		};
+
+		SDL_RenderCopy(renderer, brickDestroyedTexture, &srcRect, &dstRect);
+	}
+	else
+	{
+		SDL_RenderCopy(renderer, brickTextures[type], NULL, &dstRect);
+	}
+}
+
+void Brick::destroyBrick()
+{
+	active = false;
+	destroyed = true;
 }
 
 void Brick::loadTextures(SDL_Renderer* renderer)
@@ -65,6 +102,9 @@ void Brick::loadTextures(SDL_Renderer* renderer)
 		std::string path = "assets/Brick" + std::to_string(i) + ".png";
 		brickTextures[i] = IMG_LoadTexture(renderer, path.c_str());
 	}
+
+	if (!brickDestroyedTexture)
+		brickDestroyedTexture = IMG_LoadTexture(renderer, "assets/ExplosionBrick.png");
 }
 
 void Brick::destroyTextures()
@@ -76,5 +116,10 @@ void Brick::destroyTextures()
 			SDL_DestroyTexture(brickTextures[i]);
 			brickTextures[i] = nullptr;
 		}
+	}
+	if(brickDestroyedTexture)
+	{
+		SDL_DestroyTexture(brickDestroyedTexture);
+		brickDestroyedTexture = nullptr;
 	}
 }

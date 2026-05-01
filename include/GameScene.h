@@ -9,7 +9,8 @@ class GameScene : public Scene
 {
     SDL_Texture* backgroundTexture = nullptr;
 
-	void checkCollisions(float deltaTime);
+	void checkBrickCollisions(float deltaTime);
+	void checkBarCollisions(float deltaTime);
 
 public:
     GameScene();
