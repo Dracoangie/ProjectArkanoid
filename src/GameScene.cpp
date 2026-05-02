@@ -15,6 +15,8 @@ bool GameScene::init()
 	entities["ballPool"] = std::make_unique<BallPool>();
 	entities["bar"] = std::make_unique<Bar>();
 	entities["brickPool"] = std::make_unique<BrickPool>();
+	entities["scoreText"] = std::make_unique<Text>("SCORE:  0", 15, 16, 15);
+	entities["levelText"] = std::make_unique<Text>("LEVEL:  1", WINDOW_WIDTH /2 + 15, 16, 15);
 
 	return true;
 }
@@ -61,6 +63,11 @@ void GameScene::checkBrickCollisions(float deltaTime)
 	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
 	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
 
+	if (levelTimer > 0.0f)
+	{
+		nextLevel(deltaTime);
+		return;
+	}
 	for (auto& ball : ballPool->getActiveBalls())
 	{
 		bool collideX = false;
@@ -72,13 +79,19 @@ void GameScene::checkBrickCollisions(float deltaTime)
 			ball->transform.w,
 			ball->transform.h
 		};
-
-		for (auto& brick : brickPool->getActiveBricks())
+		std::vector<Brick*> collidedBricks = brickPool->getActiveBricks();
+		if (collidedBricks.empty())
+		{
+			nextLevel(deltaTime);
+			return;
+		}
+		for (auto& brick : collidedBricks)
 		{
 			if (!CollisionCheck(&collisionTransform, &brick->transform))
 				continue;
 
-			brick->destroyBrick();
+			if(brick->destroyBrick())
+				increaseScore(brick->getType() * 100);
 
 			float minOverlapX = std::min(
 				(ball->transform.x + ball->transform.w) - brick->transform.x,

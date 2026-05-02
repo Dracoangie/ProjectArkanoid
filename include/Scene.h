@@ -7,6 +7,8 @@
 #include "Bar.h"
 #include "BrickPool.h"
 #include "BallPool.h"
+#include "Text.h"
+#include "LevelData.h"
 #include <unordered_map>
 
 struct Color

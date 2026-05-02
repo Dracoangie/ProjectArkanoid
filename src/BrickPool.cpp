@@ -61,7 +61,7 @@ std::vector<Brick*> BrickPool::getActiveBricks()
 	std::vector<Brick*> activeBricks;
 	for (auto& brick : bricks)
 	{
-		if (brick->active)
+		if (brick->active && !brick->isDestroyed())
 			activeBricks.push_back(brick.get());
 	}
 	return activeBricks;

@@ -26,7 +26,10 @@ Brick::Brick(int x, int y, int type)
 	transform.w = 48;
 	transform.h = 24;
 	if(type > 0 && type < 5)
+	{
 		this->type = type;
+		this->_type = type;
+	}
 }
 
 Brick::~Brick()
@@ -46,7 +49,7 @@ void Brick::update(float deltaTime)
 
 	destructionTimer += deltaTime;
 
-	destructionFrame = (int)(destructionTimer / 0.1f);
+	destructionFrame = (int)(destructionTimer / 0.05f);
 
 	if (destructionFrame >= 5)
 	{
@@ -81,15 +84,19 @@ void Brick::render(SDL_Renderer* renderer)
 		SDL_RenderCopy(renderer, brickDestroyedTexture, &srcRect, &dstRect);
 	}
 	else
-	{
 		SDL_RenderCopy(renderer, brickTextures[type], NULL, &dstRect);
-	}
 }
 
-void Brick::destroyBrick()
+bool Brick::destroyBrick()
 {
+	if(type > 1)
+	{
+		type--;
+		return false;
+	}
 	active = false;
 	destroyed = true;
+	return true;
 }
 
 void Brick::loadTextures(SDL_Renderer* renderer)

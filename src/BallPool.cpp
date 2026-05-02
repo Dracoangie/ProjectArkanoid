@@ -31,8 +31,7 @@ void BallPool::render(SDL_Renderer* renderer)
 
 void BallPool::newLevel()
 {
-	reset();
-	balls[0]->activate(WINDOW_WIDTH / 2 - 8, WINDOW_HEIGHT - 90);
+	balls[0]->activate(WINDOW_WIDTH / 2 - 8, WINDOW_HEIGHT - 70);
 	balls[0]->setGameBall(true);
 }
 

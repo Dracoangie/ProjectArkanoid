@@ -22,6 +22,8 @@ bool Game::init()
 		return false;
 	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
 		return false;
+	if(TTF_Init())
+		return false;
 	window = SDL_CreateWindow("Breakout", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	if (!window)
 		return false;

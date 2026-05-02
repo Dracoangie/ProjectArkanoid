@@ -10,6 +10,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 constexpr auto WINDOW_WIDTH = 588;
 constexpr auto WINDOW_HEIGHT = 768;

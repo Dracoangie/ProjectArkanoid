@@ -27,6 +27,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\ProjectArkanoid.cpp" />
+    <ClCompile Include="src\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Ball.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="include\GameScene.h" />
     <ClInclude Include="include\LevelData.h" />
     <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -106,14 +108,14 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)external\SDL2\include;$(SolutionDir)include;$(SolutionDir)external\SDL2_image\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)external\SDL2\lib\x64;$(SolutionDir)external\SDL2_image\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)external\SDL2\include;$(SolutionDir)include;$(SolutionDir)external\SDL2_image\include;$(SolutionDir)external\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)external\SDL2\lib\x64;$(SolutionDir)external\SDL2_image\lib\x64;$(SolutionDir)external\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SolutionDir)src;$(SourcePath)</SourcePath>
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)external\SDL2\include;$(SolutionDir)include;$(SolutionDir)external\SDL2_image\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)external\SDL2\lib\x64;$(SolutionDir)external\SDL2_image\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)external\SDL2\include;$(SolutionDir)include;$(SolutionDir)external\SDL2_image\include;$(SolutionDir)external\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)external\SDL2\lib\x64;$(SolutionDir)external\SDL2_image\lib\x64;$(SolutionDir)external\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SolutionDir)src;$(SourcePath)</SourcePath>
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
@@ -127,7 +129,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;$(SolutionDir)external\SDL2_ttf\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -143,7 +145,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;$(SolutionDir)external\SDL2_ttf\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -153,12 +155,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\SDL2_ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;$(SolutionDir)external\SDL2_ttf\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -169,12 +172,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\SDL2_ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\SDL2\lib;$(SolutionDir)external\SDL2_image\lib;$(SolutionDir)external\SDL2_ttf\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

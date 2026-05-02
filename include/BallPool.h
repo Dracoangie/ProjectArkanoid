@@ -10,11 +10,6 @@ private:
 
 	void activateBall(float x, float y);
 
-	/**
-	 * Resets the ball pool, deactivating all balls and resetting their positions.
-	 */
-	void reset();
-
 public:
 	BallPool();
 	~BallPool();
@@ -22,6 +17,7 @@ public:
 	void update(float deltaTime) override;
 	void render(SDL_Renderer* renderer) override;
 
+	void reset();
 	void newLevel();
 	std::vector<Ball*> getActiveBalls();
 };
