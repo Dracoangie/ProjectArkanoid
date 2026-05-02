@@ -63,35 +63,45 @@ void GameScene::checkBrickCollisions(float deltaTime)
 
 	for (auto& ball : ballPool->getActiveBalls())
 	{
-		bool collided = false;
+		bool collideX = false;
+		bool collideY = false;
+		Transform collisionTransform =
+		{
+			ball->transform.x + ball->getSpeedX() * deltaTime,
+			ball->transform.y + ball->getSpeedY() * deltaTime,
+			ball->transform.w,
+			ball->transform.h
+		};
 
 		for (auto& brick : brickPool->getActiveBricks())
 		{
-			if (collided)
-				break;
+			if (!CollisionCheck(&collisionTransform, &brick->transform))
+				continue;
 
-			if (CollisionCheck(&ball->transform, &brick->transform))
+			brick->destroyBrick();
+
+			float minOverlapX = std::min(
+				(ball->transform.x + ball->transform.w) - brick->transform.x,
+				(brick->transform.x + brick->transform.w) - ball->transform.x);
+			float minOverlapY = std::min(
+				(ball->transform.y + ball->transform.h) - brick->transform.y,
+				(brick->transform.y + brick->transform.h) - ball->transform.y);
+
+			if (std::abs(minOverlapX - minOverlapY) <= 1.0f)
 			{
-				brick->destroyBrick();
-
-				float prevX = ball->transform.x - ball->getSpeedX() * deltaTime;
-				float prevY = ball->transform.y - ball->getSpeedY() * deltaTime;
-
-				bool wasAbove = prevY + ball->transform.h <= brick->transform.y;
-				bool wasBelow = prevY >= brick->transform.y + brick->transform.h;
-				bool wasLeft = prevX + ball->transform.w <= brick->transform.x;
-				bool wasRight = prevX >= brick->transform.x + brick->transform.w;
-
-				if (wasAbove || wasBelow)
-					ball->setSpeedY(-ball->getSpeedY());
-				else if (wasLeft || wasRight)
-					ball->setSpeedX(-ball->getSpeedX());
-				else
-					ball->setSpeedY(-ball->getSpeedY());
-
-				collided = true;
+				collideX = true;
+				collideY = true;
 			}
+			else if (minOverlapX < minOverlapY)
+				collideX = true;
+			else
+				collideY = true;
 		}
+
+		if (collideX)
+			ball->setSpeedX(-ball->getSpeedX());
+		if (collideY)
+			ball->setSpeedY(-ball->getSpeedY());
 	}
 }
 
@@ -107,9 +117,7 @@ void GameScene::checkBarCollisions(float deltaTime)
 
 		if (CollisionCheck(&ball->transform, &bar->transform))
 		{
-			ball->transform.y = bar->transform.y - ball->transform.h;
 
-			ball->setSpeedY(-std::abs(ball->getSpeedY()));
 
 			float barCenterX = bar->transform.x + bar->transform.w / 2.0f;
 			float ballCenterX = ball->transform.x + ball->transform.w / 2.0f;
@@ -118,13 +126,15 @@ void GameScene::checkBarCollisions(float deltaTime)
 			float maxDistance = bar->transform.w / 2.0f;
 
 			float normalizedDistance = distanceFromCenter / maxDistance;
+			normalizedDistance = std::max(-1.0f, std::min(1.0f, normalizedDistance));
+			normalizedDistance = normalizedDistance * 0.7f;
 
-			if (normalizedDistance < -1.0f)
-				normalizedDistance = -1.0f;
-			else if (normalizedDistance > 1.0f)
-				normalizedDistance = 1.0f;
+			float dir = (ball->transform.y + ball->transform.h / 2.0f >
+				bar->transform.y + bar->transform.h / 2.0f - 10) ? 1.0f : -1.0f;
 
-			ball->setSpeedX(normalizedDistance * 400.0f);
+
+			ball->setSpeedX(normalizedDistance * ball->maxSpeed);
+			ball->setSpeedY((1 - std::abs(normalizedDistance)) * dir * ball->maxSpeed);
 		}
 	}
 }

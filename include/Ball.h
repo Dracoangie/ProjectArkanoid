@@ -4,22 +4,29 @@
 
 class Ball : public Entity
 {
-	static const int basicspeedX = 400;
-	static const int basicspeedY = 400;
-	float speedX = basicspeedX;
-	float speedY = basicspeedY;
+	static const int basicspeed = 500;
+	float speedX = 0;
+	float speedY = -basicspeed;
 	bool active = false;
 	bool gameBall = false;
 
-	void resetSpeed() { speedX = 0; speedY = -basicspeedY; }
+	void resetSpeed()
+	{
+		speedX = 0; speedY = -basicspeed; maxSpeed = basicspeed;
+	}
 public:
+	float maxSpeed = basicspeed;
 	Ball();
 	~Ball();
 	void start(SDL_Renderer* renderer) override;
 	void update(float deltaTime) override;
 	void render(SDL_Renderer* renderer) override;
 
-	void multiplySpeed(float multiplier) { speedX *= multiplier; speedY *= multiplier; }
+	void multiplySpeed(float multiplier)
+	{ 
+		speedX *= multiplier; speedY *= multiplier; 
+		maxSpeed *= multiplier;
+	}
 
 	bool isActive() const { return active; }
 	void activate(float x, float y);

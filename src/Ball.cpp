@@ -43,7 +43,10 @@ void Ball::update(float deltaTime)
     if (CollisionWalls(&collisionTransform))
         speedX = -speedX;
     if (transform.y < 64)
+    {
+		transform.y = 65;
         speedY = -speedY;
+    }
     transform.x += speedX * deltaTime;
     transform.y += speedY * deltaTime;
 }

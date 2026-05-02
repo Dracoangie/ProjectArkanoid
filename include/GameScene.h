@@ -12,6 +12,10 @@ class GameScene : public Scene
 	void checkBrickCollisions(float deltaTime);
 	void checkBarCollisions(float deltaTime);
 
+	int level = 1;
+	int score = 0;
+	int lives = 3;
+
 public:
     GameScene();
 	~GameScene();
