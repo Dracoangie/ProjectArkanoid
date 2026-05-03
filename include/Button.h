@@ -5,6 +5,7 @@
 class Button : public Entity
 {
 	Text text;
+	bool wasPressedInside = false;
 
 public:
 	Button(const std::string& buttonText, int x, int y, int w, int h);

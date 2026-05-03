@@ -28,7 +28,11 @@
     <ClCompile Include="src\EndMenu.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
+    <ClCompile Include="src\HowToPlayMenu.cpp" />
     <ClCompile Include="src\ProjectArkanoid.cpp" />
+    <ClCompile Include="src\SelectMenu.cpp" />
+    <ClCompile Include="src\StartMenu.cpp" />
+    <ClCompile Include="src\StartScene.cpp" />
     <ClCompile Include="src\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -42,9 +46,13 @@
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameScene.h" />
+    <ClInclude Include="include\HowToPlayMenu.h" />
     <ClInclude Include="include\LevelData.h" />
     <ClInclude Include="include\Menu.h" />
     <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\SelectMenu.h" />
+    <ClInclude Include="include\StartMenu.h" />
+    <ClInclude Include="include\StartScene.h" />
     <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\Utils.h" />
   </ItemGroup>

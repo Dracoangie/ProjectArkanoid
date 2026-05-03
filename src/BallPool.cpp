@@ -1,9 +1,10 @@
 #include "BallPool.h"
 
-BallPool::BallPool()
+BallPool::BallPool(int difficulty) : difficulty(difficulty)
 {
 	for (int i = 0; i < poolSize; i++)
 		balls.push_back(std::make_unique<Ball>());
+	multiplyBasicSpeed(difficulty);
 }
 
 BallPool::~BallPool()
@@ -32,7 +33,7 @@ void BallPool::render(SDL_Renderer* renderer)
 void BallPool::newLevel()
 {
 	balls[0]->activate(WINDOW_WIDTH / 2 - 8, WINDOW_HEIGHT - 70);
-	balls[0]->setGameBall(true);
+	balls[0]->setGameBall(true, 400 * (1.0f + 0.5f * (difficulty - 1)));
 }
 
 std::vector<Ball*> BallPool::getActiveBalls()
@@ -61,9 +62,7 @@ void BallPool::activateBall(float x, float y)
 void BallPool::reset()
 {
 	for (auto& ball : balls)
-	{
 		ball->deactivate();
-	}
 }
 
 void BallPool::multiplySpeed(float multiplier)

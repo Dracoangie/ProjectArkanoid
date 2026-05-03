@@ -6,15 +6,19 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-
 	SDL_DestroyTexture(backgroundTexture);
 	SDL_DestroyTexture(background_sheet);
 }
 
+GameScene::GameScene(int difficulty) : GameScene()
+{
+	dificulty = difficulty;
+}
+
 bool GameScene::init()
 {
-	entities["ballPool"] = std::make_unique<BallPool>();
-	entities["bar"] = std::make_unique<Bar>();
+	entities["ballPool"] = std::make_unique<BallPool>(dificulty);
+	entities["bar"] = std::make_unique<Bar>(dificulty);
 	entities["brickPool"] = std::make_unique<BrickPool>();
 	entities["scoreText"] = std::make_unique<Text>("SCORE:  0", 20, 20, 1);
 	entities["levelText"] = std::make_unique<Text>("LEVEL:  1", WINDOW_WIDTH /2 + 20, 20, 1);
@@ -26,19 +30,13 @@ bool GameScene::init()
 
 void GameScene::start(SDL_Renderer* renderer)
 {
-	for (auto& menu : menus)
-		menu.second->start(renderer);
 	backgroundTexture = IMG_LoadTexture(renderer, "assets/Background.png");
 	background_sheet = IMG_LoadTexture(renderer, "assets/Background_sheet.png");
+
+	for (auto& menu : menus)
+		menu.second->start(renderer);
 	for (auto& entity : entities)
 		entity.second->start(renderer);
-
-	if (entities["brickPool"])
-	{
-		auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
-		if (brickPool)
-			brickPool->loadLevel(Levels::LEVEL_1);
-	}
 }
 
 int GameScene::update(float deltaTime)
@@ -219,10 +217,10 @@ void GameScene::nextLevel(float deltaTime)
 	auto levelText = dynamic_cast<Text*>(entities["levelText"].get());
 	if (levelText)
 		levelText->setText("LEVEL:  " + std::to_string(level));
-	if (ballPool)
-		ballPool->newLevel();
 	if (bar)
 		bar->newLevel();
+	if (ballPool)
+		ballPool->newLevel();
 	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
 	if (brickPool)
 		brickPool->loadLevel(Levels::levels[level - 1]);

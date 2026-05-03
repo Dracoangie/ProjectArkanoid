@@ -4,15 +4,17 @@
 
 class Ball : public Entity
 {
-	static const int basicspeed = 500;
+	static int basicspeed;
 	float speedX = 0;
 	float speedY = -basicspeed;
 	bool active = false;
 	bool gameBall = false;
+	float gameBallSpeed;
 
 	void resetSpeed()
 	{
 		speedX = 0; speedY = -basicspeed; maxSpeed = basicspeed;
+		std::cout << "Resetting ball speed to: " << speedX << ", " << speedY << std::endl;
 	}
 public:
 	float maxSpeed = basicspeed;
@@ -28,15 +30,20 @@ public:
 		maxSpeed *= multiplier;
 	}
 
+	static void multiplyBasicSpeed(int difficulty)
+	{
+		basicspeed = 500;
+		basicspeed *= 1.0f + 0.25f * (difficulty - 1);
+	}
+
 	bool isActive() const { return active; }
 	void activate(float x, float y);
 	void activate(float x, float y, float velocityX, float velocityY);
 	void deactivate();
 
-	void setGameBall(bool value) { gameBall = value; }
+	void setGameBall(bool value, int speed) { gameBall = value; gameBallSpeed = speed; }
 	float getSpeedX() const { return speedX; }
 	float getSpeedY() const { return speedY; }
 	void setSpeedX(float newSpeedX) { speedX = newSpeedX; }
 	void setSpeedY(float newSpeedY) { speedY = newSpeedY; }
 };
-

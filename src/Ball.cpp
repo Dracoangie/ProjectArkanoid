@@ -1,5 +1,7 @@
 #include "Ball.h"
 
+int Ball::basicspeed = 400;
+
 Ball::Ball()
 {
     transform.x = WINDOW_WIDTH / 2;
@@ -25,9 +27,9 @@ void Ball::update(float deltaTime)
     {
         const Uint8* keystate = SDL_GetKeyboardState(NULL);
         if ((keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_A]) && transform.x > 42)
-            transform.x -= 400 * deltaTime;
+            transform.x -= gameBallSpeed * deltaTime;
         if ((keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_D]) && transform.x + transform.w < WINDOW_WIDTH - 43)
-            transform.x += 400 * deltaTime;
+            transform.x += gameBallSpeed * deltaTime;
         if (keystate[SDL_SCANCODE_SPACE])
 			gameBall = false;
         else

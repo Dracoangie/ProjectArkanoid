@@ -40,7 +40,7 @@ bool Button::isClicked()
 {
 	int mouseX, mouseY = 0;
 	Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
-	if (mouseState & SDL_BUTTON(SDL_BUTTON_LEFT))
+	if (mouseState && SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
 		return mouseX >= transform.x && mouseX <= transform.x + transform.w &&
 			mouseY >= transform.y && mouseY <= transform.y + transform.h;

@@ -14,6 +14,7 @@ void BrickPool::start(SDL_Renderer* renderer)
 {
 	for (auto& brick : bricks)
 		brick->start(renderer);
+	loadLevel(Levels::LEVEL_1);
 }
 
 void BrickPool::update(float deltaTime)

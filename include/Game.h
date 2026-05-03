@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Utils.h"
+#include "StartScene.h"
 #include <GameScene.h>
 
 class Game

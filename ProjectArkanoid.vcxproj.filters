@@ -42,6 +42,18 @@
     <ClCompile Include="src\BallPool.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\StartScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StartMenu.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SelectMenu.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HowToPlayMenu.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -87,6 +99,18 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="include\EndMenu.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StartScene.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StartMenu.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SelectMenu.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HowToPlayMenu.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

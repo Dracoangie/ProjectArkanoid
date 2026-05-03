@@ -15,12 +15,14 @@ class GameScene : public Scene
 	float levelTimer = 0.0f;
 	bool paused = false;
     bool endGameBool = false;
+	int dificulty = 1;
 
 	int level = 1;
 	int score = 0;
 
 public:
     GameScene();
+    GameScene(int difficulty);
 	~GameScene();
     
     bool init() override;
@@ -31,7 +33,7 @@ public:
 
     void increaseScore(int points)
     {
-        score += points;
+        score += points * dificulty;
         auto scoreText = dynamic_cast<Text*>(entities["scoreText"].get());
         if (scoreText)
             scoreText->setText("SCORE:  " + std::to_string(score));
@@ -39,16 +41,20 @@ public:
 
     void nextLevel(float deltaTime);
 
-    void LoseGame()
-    {
-        paused = true;
-        
-	}
-
     void endGame()
     {
         paused = true;
 		menus["endMenu"]->setIsActive(true);
+	}
+
+    void setDificulty(int newDificulty)
+    {
+        dificulty = newDificulty;
+	}
+
+    int getDificulty() const
+    {
+        return dificulty;
 	}
 };
 

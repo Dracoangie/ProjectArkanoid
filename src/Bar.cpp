@@ -8,6 +8,12 @@ Bar::Bar()
 	transform.h = 20;
 }
 
+Bar::Bar(int difficulty) : Bar()
+{
+	basicSpeed *= 1.0f + 0.5f * (difficulty - 1);
+	resetSpeed();
+}
+
 Bar::~Bar()
 {
 }

@@ -5,10 +5,11 @@
 class Bar : public Entity
 {
 	float basicSpeed = 400;
-	float speed = 400;
+	float speed = basicSpeed;
 
 public:
 	Bar();
+	Bar(int difficulty);
 	~Bar();
 	void start(SDL_Renderer* renderer) override;
 	void update(float deltaTime) override;
@@ -17,6 +18,10 @@ public:
 	void setSpeed(float newSpeed)
 	{
 		speed = newSpeed;
+	}
+	float getSpeed() const
+	{
+		return speed;
 	}
 	void resetSpeed()
 	{

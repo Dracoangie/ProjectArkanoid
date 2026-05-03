@@ -7,11 +7,12 @@ class BallPool : public Entity
 private:
 	std::vector<std::unique_ptr<Ball>> balls;
 	int poolSize = 5;
+	int difficulty = 1;
 
 	void activateBall(float x, float y);
 
 public:
-	BallPool();
+	BallPool(int difficulty);
 	~BallPool();
 	void start(SDL_Renderer* renderer) override;
 	void update(float deltaTime) override;
@@ -22,5 +23,9 @@ public:
 	std::vector<Ball*> getActiveBalls();
 	void multiplySpeed(float multiplier);
 	void deactiveBall(Ball* ball);
+	void multiplyBasicSpeed(int difficulty)
+	{
+		Ball::multiplyBasicSpeed(difficulty);
+	}
 };
 

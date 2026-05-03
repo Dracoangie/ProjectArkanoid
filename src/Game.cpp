@@ -6,7 +6,7 @@ Game::Game()
 		exit(1);
 
 	lastScene = nullptr;
-	currentScene = std::make_shared<GameScene>();
+	currentScene = std::make_shared<StartScene>();
 	if (!currentScene->init())
 		exit(1);
 }
@@ -55,10 +55,24 @@ void Game::run()
 				currentScene->render(renderer);
 				break;
 			case 1:
-				changeScene(std::make_shared<GameScene>());
-				continue;
+				changeScene(std::make_shared<GameScene>(
+					std::dynamic_pointer_cast<GameScene>(lastScene)->getDificulty()));
+				break;
+			case 2:
+				changeScene(std::make_shared<StartScene>());
+				break;
 			case 3:
 				running = false;
+				break;
+			case 10:
+				changeScene(std::make_shared<GameScene>(1));
+				break;
+			case 11:
+				changeScene(std::make_shared<GameScene>(2));
+				break;
+			case 12:
+				changeScene(std::make_shared<GameScene>(3));
+				break;
 				break;
 		}
 	}
