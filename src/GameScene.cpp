@@ -53,8 +53,12 @@ int GameScene::update(float deltaTime)
 		return changeSceneTimerUpdate(deltaTime);
 	for (auto& menu : menus)
 	{
-		if(returnValue = menu.second->update(deltaTime) == 1)
+		returnValue = menu.second->update(deltaTime);
+		if(returnValue != 0)
+		{
 			endGameBool = true;
+			break;
+		}
 	}
 	if(paused)
 		return 0;
@@ -96,7 +100,6 @@ void GameScene::render(SDL_Renderer* renderer)
 
 		SDL_RenderCopy(renderer, background_sheet, &srcRect, &dstRect);
 	}
-
 	SDL_RenderPresent(renderer);
 }
 
