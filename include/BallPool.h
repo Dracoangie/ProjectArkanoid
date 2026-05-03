@@ -9,11 +9,10 @@ private:
 	int poolSize = 5;
 	int difficulty = 1;
 
-	void activateBall(float x, float y);
-
 public:
 	BallPool(int difficulty);
 	~BallPool();
+	void activateBall(float x, float y);
 	void start(SDL_Renderer* renderer) override;
 	void update(float deltaTime) override;
 	void render(SDL_Renderer* renderer) override;
@@ -22,6 +21,11 @@ public:
 	void newLevel();
 	std::vector<Ball*> getActiveBalls();
 	void multiplySpeed(float multiplier);
+	void resetSpeed()
+	{
+		for (auto& ball : balls)
+			ball->resetMovement();
+	}
 	void deactiveBall(Ball* ball);
 	void multiplyBasicSpeed(int difficulty)
 	{

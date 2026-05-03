@@ -17,9 +17,11 @@ GameScene::GameScene(int difficulty) : GameScene()
 
 bool GameScene::init()
 {
-	entities["ballPool"] = std::make_unique<BallPool>(dificulty);
 	entities["bar"] = std::make_unique<Bar>(dificulty);
+	entities["ballPool"] = std::make_unique<BallPool>(dificulty);
 	entities["brickPool"] = std::make_unique<BrickPool>();
+	entities["powerUpPool"] = std::make_unique<PowerUpPool>();
+
 	entities["scoreText"] = std::make_unique<Text>("SCORE:  0", 20, 20, 1);
 	entities["levelText"] = std::make_unique<Text>("LEVEL:  1", WINDOW_WIDTH /2 + 20, 20, 1);
 
@@ -62,6 +64,19 @@ int GameScene::update(float deltaTime)
 		return 0;
 	checkBrickCollisions(deltaTime);
 	checkBarCollisions(deltaTime);
+	checkPowerUpCollisions(deltaTime);
+	if(slowdownActive)
+	{
+		slowdownPowerupDuration += deltaTime;
+		if(slowdownPowerupDuration >= 5.0f)
+		{
+			slowdownActive = false;
+			auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
+			if (ballPool)
+				ballPool->resetSpeed();
+			slowdownPowerupDuration = 0.0f;
+		}
+	}
 	for (auto& entity : entities)
 		entity.second->update(deltaTime);
 	return 0;
@@ -105,6 +120,7 @@ void GameScene::checkBrickCollisions(float deltaTime)
 {
 	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
 	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
+	auto powerUpPool = dynamic_cast<PowerUpPool*>(entities["powerUpPool"].get());
 
 	if (levelTimer > 0.0f)
 	{
@@ -136,6 +152,9 @@ void GameScene::checkBrickCollisions(float deltaTime)
 			if(brick->destroyBrick())
 				increaseScore(brick->getType() * 100);
 
+			if(rand() % 100 < 20)
+				powerUpPool->spawnPowerUp(brick->transform.x, brick->transform.y);
+
 			float minOverlapX = std::min(
 				(ball->transform.x + ball->transform.w) - brick->transform.x,
 				(brick->transform.x + brick->transform.w) - ball->transform.x);
@@ -162,7 +181,7 @@ void GameScene::checkBrickCollisions(float deltaTime)
 		{
 			ballPool->deactiveBall(ball);
 			if(ballPool->getActiveBalls().empty())
-				endGame();
+				loseLife();
 		}
 	}
 }
@@ -201,6 +220,35 @@ void GameScene::checkBarCollisions(float deltaTime)
 	}
 }
 
+void GameScene::checkPowerUpCollisions(float deltaTime)
+{
+	auto powerUpPool = dynamic_cast<PowerUpPool*>(entities["powerUpPool"].get());
+	auto bar = dynamic_cast<Bar*>(entities["bar"].get());
+	for (auto& powerUp : powerUpPool->getActivePowerUps())
+	{
+		if (!CollisionCheck(&powerUp->transform, &bar->transform))
+			continue;
+		switch (powerUp->getType())
+		{
+			case PowerUpType::Expand:
+				increaseBarWidth(1.5f);
+				break;
+			case PowerUpType::ExtraLife:
+				increaseLife();
+				break;
+			case PowerUpType::SpeedDown:
+				slowDownBall(0.7f);
+				break;
+			case PowerUpType::ExtraBall:
+				extraBall();
+				break;
+			default:
+				break;
+		}
+		powerUp->deactivate();
+	}
+}
+
 void GameScene::nextLevel(float deltaTime)
 {
 	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
@@ -223,6 +271,13 @@ void GameScene::nextLevel(float deltaTime)
 		ballPool->newLevel();
 	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
 	if (brickPool)
+	{
+		if (level > Levels::levels.size())
+		{
+			 endGame();
+			 return;
+		}
 		brickPool->loadLevel(Levels::levels[level - 1]);
+	}
 	levelTimer = 0.0f;
 }

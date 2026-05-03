@@ -10,6 +10,7 @@
 #include "Text.h"
 #include "LevelData.h"
 #include "EndMenu.h"
+#include "PowerUpPool.h"
 
 #include <unordered_map>
 

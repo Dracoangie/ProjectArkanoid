@@ -4,7 +4,7 @@
 
 class Ball : public Entity
 {
-	static int basicspeed;
+	static float basicspeed;
 	float speedX = 0;
 	float speedY = -basicspeed;
 	bool active = false;
@@ -14,7 +14,6 @@ class Ball : public Entity
 	void resetSpeed()
 	{
 		speedX = 0; speedY = -basicspeed; maxSpeed = basicspeed;
-		std::cout << "Resetting ball speed to: " << speedX << ", " << speedY << std::endl;
 	}
 public:
 	float maxSpeed = basicspeed;
@@ -23,6 +22,13 @@ public:
 	void start(SDL_Renderer* renderer) override;
 	void update(float deltaTime) override;
 	void render(SDL_Renderer* renderer) override;
+
+	void resetMovement()
+	{
+		speedX = speedX * (basicspeed / maxSpeed);
+		speedY = speedY * (basicspeed / maxSpeed);
+		maxSpeed = basicspeed;
+	}
 
 	void multiplySpeed(float multiplier)
 	{ 
@@ -41,9 +47,15 @@ public:
 	void activate(float x, float y, float velocityX, float velocityY);
 	void deactivate();
 
-	void setGameBall(bool value, int speed) { gameBall = value; gameBallSpeed = speed; }
+	void setGameBall(bool value, int speed) { gameBall = value; gameBallSpeed = (float)speed; }
 	float getSpeedX() const { return speedX; }
 	float getSpeedY() const { return speedY; }
 	void setSpeedX(float newSpeedX) { speedX = newSpeedX; }
 	void setSpeedY(float newSpeedY) { speedY = newSpeedY; }
+	void setSpeedByDirection(float angleDegrees)
+	{
+		float angleRadians = angleDegrees * 3.14159265f / 180.0f;
+		speedX = maxSpeed * cos(angleRadians);
+		speedY = maxSpeed * sin(angleRadians);
+	}
 };

@@ -54,6 +54,12 @@
     <ClCompile Include="src\HowToPlayMenu.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\PowerUp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PowerUpPool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -111,6 +117,12 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="include\HowToPlayMenu.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PowerUp.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PowerUpPool.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

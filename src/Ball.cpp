@@ -1,13 +1,14 @@
 #include "Ball.h"
 
-int Ball::basicspeed = 400;
+float Ball::basicspeed = 400;
 
 Ball::Ball()
 {
-    transform.x = WINDOW_WIDTH / 2;
+    transform.x = (float)(WINDOW_WIDTH / 2);
     transform.y = 10;
     transform.w = 16;
     transform.h = 18;
+	gameBallSpeed = basicspeed;
 }
 
 Ball::~Ball()

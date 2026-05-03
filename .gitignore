@@ -20,3 +20,5 @@ bin/*.pdb
 *.exp
 *.lib
 *.dll
+bin/ProjectArkanoid.exe
+bin/ProjectArkanoid.pdb

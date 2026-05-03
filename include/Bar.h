@@ -37,6 +37,7 @@ public:
 	{
 		resetSpeed();
 		transform.x = WINDOW_WIDTH / 2 - 40;
+		transform.w = 80;
 	}
 
 };

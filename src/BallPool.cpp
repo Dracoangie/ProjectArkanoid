@@ -33,7 +33,7 @@ void BallPool::render(SDL_Renderer* renderer)
 void BallPool::newLevel()
 {
 	balls[0]->activate(WINDOW_WIDTH / 2 - 8, WINDOW_HEIGHT - 70);
-	balls[0]->setGameBall(true, 400 * (1.0f + 0.5f * (difficulty - 1)));
+	balls[0]->setGameBall(true, (int)(400 * (1.0f + 0.5f * (difficulty - 1))));
 }
 
 std::vector<Ball*> BallPool::getActiveBalls()
