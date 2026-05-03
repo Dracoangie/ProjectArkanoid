@@ -1,0 +1,4 @@
+﻿  Button.cpp
+E:\Repositorios\ProjectArkanoid\src\Button.cpp(5,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+E:\Repositorios\ProjectArkanoid\src\Button.cpp(6,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+  ProjectArkanoid.vcxproj -> E:\Repositorios\ProjectArkanoid\bin\ProjectArkanoid.exe
