@@ -1,0 +1,22 @@
+# --- Visual Studio ---
+.vs/
+out/
+build/
+bin/
+ProjectArkanoid/
+*.user
+*.userosscache
+*.sln.doccache
+
+# --- Compilación y Binarios ---
+# Ignoramos las carpetas de salida de VS (Debug/Release y x64/x86)
+[Dd]ebug/
+[Rr]elease/
+bin/*.exe
+bin/*.pdb
+*.exe
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.dll
