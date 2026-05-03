@@ -7,13 +7,13 @@ class Text : public Entity
 	SDL_Color color;
 	std::string text;
 	SDL_Surface* textSurface;
+	int scale = 1;
 
 public:
 	Text();
 	Text(const std::string& initialText);
 	Text(const std::string& initialText, int scale);
 	Text(const std::string& initialText, int x, int y, int scale);
-	Text(const std::string& initialText, int x, int y, int w, int h);
 	~Text();
 	void start(SDL_Renderer* renderer) override;
 	void update(float deltaTime) override;

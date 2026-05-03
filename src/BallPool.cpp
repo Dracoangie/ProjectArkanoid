@@ -66,3 +66,17 @@ void BallPool::reset()
 	}
 }
 
+void BallPool::multiplySpeed(float multiplier)
+{
+	for (auto& ball : balls)
+	{
+		if (ball->isActive())
+			ball->multiplySpeed(multiplier);
+	}
+}
+
+void BallPool::deactiveBall(Ball* ball)
+{
+	ball->deactivate();
+}
+

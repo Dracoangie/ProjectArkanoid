@@ -30,11 +30,17 @@
     <ClCompile Include="src\BrickPool.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\BallPool.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Text.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EndMenu.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BallPool.cpp">
+      <Filter>includes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +78,15 @@
       <Filter>includes</Filter>
     </ClInclude>
     <ClInclude Include="include\Text.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Menu.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Button.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EndMenu.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

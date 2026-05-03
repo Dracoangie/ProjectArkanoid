@@ -20,5 +20,7 @@ public:
 	void reset();
 	void newLevel();
 	std::vector<Ball*> getActiveBalls();
+	void multiplySpeed(float multiplier);
+	void deactiveBall(Ball* ball);
 };
 

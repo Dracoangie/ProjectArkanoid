@@ -3,12 +3,14 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Entity.h"
+#include "Utils.h"
 #include "Bar.h"
 #include "BrickPool.h"
 #include "BallPool.h"
 #include "Text.h"
 #include "LevelData.h"
+#include "EndMenu.h"
+
 #include <unordered_map>
 
 struct Color
@@ -20,7 +22,33 @@ class Scene
 {
 protected:
 	std::unordered_map<std::string, std::unique_ptr<Entity>> entities;
+	std::unordered_map<std::string, std::unique_ptr<Menu>> menus;
 	Color backgroundColor = { 40, 44, 60, 255 };
+	bool startAnim = true;
+	float changeSceneTimer = 0.0f;
+	int returnValue = 0;
+
+	void startChangeSceneTimer(float deltaTime)
+	{
+		changeSceneTimer += deltaTime;
+		if (changeSceneTimer >= 0.4f)
+		{
+			changeSceneTimer = 0.0f;
+			startAnim = false;
+		}
+	}
+
+	int changeSceneTimerUpdate(float deltaTime)
+	{
+		changeSceneTimer += deltaTime;
+		if (changeSceneTimer >= 0.4f)
+		{
+			changeSceneTimer = 0.0f;
+			return returnValue;
+		}
+
+		return 0;
+	}
 
 public:
 	virtual ~Scene() {}
@@ -38,7 +66,7 @@ public:
 	/**
 	 * Calls the update method of the game objects.
 	 */
-	virtual void update(float deltaTime) = 0;
+	virtual int update(float deltaTime) = 0;
 
 	/**
 	 * Calls the render method of the game objects.

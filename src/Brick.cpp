@@ -34,7 +34,6 @@ Brick::Brick(int x, int y, int type)
 
 Brick::~Brick()
 {
-	Brick::destroyTextures();
 }
 
 void Brick::start(SDL_Renderer* renderer)

@@ -14,29 +14,20 @@ Text::Text()
 
 Text::Text(const std::string& initialText) : Text()
 {
-	transform.h = 100;
-	transform.w = 15 * initialText.length();
 	setText(initialText);
 }
 
 Text::Text(const std::string& initialText, int scale) : Text(initialText)
 {
-	transform.w = initialText.length() * scale;
-	transform.h = 2.5f * scale;
+	this->scale = scale;
+	transform.w *= scale;
+	transform.h *= scale;
 }
 
 Text::Text(const std::string& initialText, int x, int y, int scale) : Text(initialText, scale)
 {
 	transform.x = x;
 	transform.y = y;
-}
-
-Text::Text(const std::string& initialText, int x, int y, int w, int h) : Text(initialText)
-{
-	transform.x = x;
-	transform.y = y;
-	transform.w = w;
-	transform.h = h;
 }
 
 Text::~Text()
@@ -80,6 +71,8 @@ void Text::setText(const std::string& newText)
 	if (texture)
 		SDL_DestroyTexture(texture);
 	textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
+	transform.w = textSurface->w;
+	transform.h = textSurface->h;
 }
 
 void Text::setFont(TTF_Font* newFont)

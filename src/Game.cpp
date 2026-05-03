@@ -49,22 +49,49 @@ void Game::run()
 			lastScene = currentScene;
 		}
 
-		currentScene->update(deltaTime);
-		currentScene->render(renderer);
+		switch (currentScene->update(deltaTime))
+		{
+			case 0:
+				currentScene->render(renderer);
+				break;
+			case 1:
+				changeScene(std::make_shared<GameScene>());
+				continue;
+			case 3:
+				running = false;
+				break;
+		}
 	}
 }
 
 void Game::changeScene(std::shared_ptr<Scene> newScene)
 {
 	currentScene = newScene;
+	if (!currentScene->init())
+		exit(1);
 }
 
 void Game::cleanup()
 {
+	currentScene.reset();
+	lastScene.reset();
+
+	Brick::destroyTextures();
+
 	if (renderer)
+	{
 		SDL_DestroyRenderer(renderer);
+		renderer = nullptr;
+	}
+
 	if (window)
+	{
 		SDL_DestroyWindow(window);
+		window = nullptr;
+	}
+
+	TTF_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -74,8 +101,6 @@ void Game::handleEvents()
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
-			running = false;
-		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 			running = false;
 	}
 }
