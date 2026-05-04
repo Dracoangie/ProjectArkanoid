@@ -11,7 +11,7 @@ A classic Arkanoid implementation developed in **C++** using the **SDL2** librar
 
 ## Setup and Execution
 1.  **Environment:** Designed for **Visual Studio 2022 (x64)**.
-2.  **Dependencies:** SDL2 and SDL2_image (included in the `external/` folder for immediate compilation).
+2.  **Dependencies:** SDL2, SDL2_image and SDL2_ttf (included in the `external/` folder for immediate compilation).
 3.  **Compilation:**
     *   Open `ProjectArkanoid.sln`.
     *   Set configuration to `x64` (Debug or Release).
