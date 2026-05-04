@@ -13,7 +13,9 @@ class Ball : public Entity
 
 	void resetSpeed()
 	{
-		speedX = 0; speedY = -basicspeed; maxSpeed = basicspeed;
+		int randir = rand() % 2 == 0 ? -1 : 1;
+		int ran = rand() % 100;
+		speedX = ran * randir; speedY = -basicspeed + ran; maxSpeed = basicspeed;
 	}
 public:
 	float maxSpeed = basicspeed;
