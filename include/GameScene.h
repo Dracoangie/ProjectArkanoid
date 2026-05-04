@@ -3,26 +3,66 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Scene.h"
+#include "PauseMenu.h"
+#include <fstream>
 
 class GameScene : public Scene
 {
+	std::unique_ptr<Text> press;
+	bool pressed = false;
     SDL_Texture* backgroundTexture = nullptr;
+    SDL_Texture* backgroundBreakthroughTexture = nullptr;
     SDL_Texture* background_sheet = nullptr;
+	int highScore = 0;
 
-	void checkBrickCollisions(float deltaTime);
-	void checkBarCollisions(float deltaTime);
-	void checkPowerUpCollisions(float deltaTime);
-	float levelTimer = 0.0f;
+    int dificulty = 1;
+
 	bool paused = false;
+    bool escapeWasPressed = false;
     bool endGameBool = false;
-	int dificulty = 1;
+
+    float levelTimer = 0.0f;
+
 	float slowdownPowerupDuration = 0.0f;
 	bool slowdownActive = false;
 
-	int level = 1;
+    float breakthroughPowerupDuration = 0.0f;
+    bool breakthroughActive = false;
+
 	int score = 0;
+    int level = 1;
 	int lives = 2;
 
+    void checkBrickCollisions(float deltaTime);
+    void checkBarCollisions(float deltaTime);
+    void checkPowerUpCollisions(float deltaTime);
+
+
+    void saveHighScore()
+    {
+        std::ofstream file("highscore.txt");
+
+        if (file.is_open())
+        {
+            file << highScore;
+            file.close();
+        }
+    }
+
+    void loadHighScore()
+    {
+        std::ifstream file("highscore.txt");
+
+        if (file.is_open())
+        {
+            file >> highScore;
+            file.close();
+        }
+        else
+        {
+            highScore = 0;
+        }
+    }
 public:
     GameScene();
     GameScene(int difficulty);
@@ -40,17 +80,13 @@ public:
         auto scoreText = dynamic_cast<Text*>(entities["scoreText"].get());
         if (scoreText)
             scoreText->setText("SCORE:  " + std::to_string(score));
-	}
-
-    void increaseBarWidth(float multiplier)
-    {
-        auto bar = dynamic_cast<Bar*>(entities["bar"].get());
-        if (bar)
-            {
-            bar->transform.w = static_cast<int>(bar->transform.w * multiplier);
-            if (bar->transform.w > 200)
-                bar->transform.w = 200;
-		}
+        if(score > highScore)
+        {
+            highScore = score;
+            auto highText = dynamic_cast<Text*>(entities["highText"].get());
+            if (highText)
+                highText->setText("HIGH SCORE:  " + std::to_string(highScore));
+        }
     }
 
     void nextLevel(float deltaTime);
@@ -67,12 +103,17 @@ public:
         auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
         ballPool->reset();
 		ballPool->newLevel();
+
+        dynamic_cast<Text*>(entities["LivesText"].get())->setText("LIVES:  " + std::to_string(lives));
     }
 
     void endGame()
     {
+        breakthroughPowerupDuration = 0;
         paused = true;
 		menus["endMenu"]->setIsActive(true);
+		dynamic_cast<BrickPool*>(entities["brickPool"].get())->deactivateAllBricks();
+        saveHighScore();
 	}
 
     void setDificulty(int newDificulty)
@@ -85,6 +126,24 @@ public:
 	}
 
 	//Powerup functions
+
+    void increaseBarWidth(float multiplier)
+    {
+        auto bar = dynamic_cast<Bar*>(entities["bar"].get());
+
+        if (!bar)
+            return;
+
+        float oldWidth = bar->transform.w;
+        float newWidth = oldWidth * multiplier;
+
+        if (newWidth > 200)
+            newWidth = 200;
+
+        float delta = newWidth - oldWidth;
+        bar->transform.x -= delta / 2.0f;
+        bar->transform.w = newWidth;
+    }
 
     void increaseLife()
     {

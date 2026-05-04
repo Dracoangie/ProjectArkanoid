@@ -29,6 +29,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\HowToPlayMenu.cpp" />
+    <ClCompile Include="src\PauseMenu.cpp" />
     <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\PowerUpPool.cpp" />
     <ClCompile Include="src\ProjectArkanoid.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="include\HowToPlayMenu.h" />
     <ClInclude Include="include\LevelData.h" />
     <ClInclude Include="include\Menu.h" />
+    <ClInclude Include="include\PauseMenu.h" />
     <ClInclude Include="include\PowerUp.h" />
     <ClInclude Include="include\PowerUpPool.h" />
     <ClInclude Include="include\Scene.h" />

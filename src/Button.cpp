@@ -1,12 +1,15 @@
 #include "Button.h"
 
-Button::Button(const std::string& buttonText, int x, int y, int w, int h)
+Button::Button(const std::string& buttonText, float x, float y, float scale)
 {
 	transform.x = x;
 	transform.y = y;
-	transform.w = w;
-	transform.h = h;
-	text = Text(buttonText, x + 10, y + 10, 1);
+	transform.w = x;
+	transform.h = y;
+	text = Text(buttonText, x + 10, y + 10, scale);
+	text.setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 24));
+	transform.w = text.transform.w + 20;
+	transform.h = text.transform.h + 20;
 }
 
 Button::~Button()
@@ -20,19 +23,19 @@ void Button::start(SDL_Renderer* renderer)
 
 void Button::update(float deltaTime)
 {
+
 	text.update(deltaTime);
+	int mouseX, mouseY = 0;
+	Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+	if(mouseX >= transform.x && mouseX <= transform.x + transform.w &&
+		mouseY >= transform.y && mouseY <= transform.y + transform.h)
+		text.setColor(onHoverColor);
+	else
+		text.setColor(backgroundColor);
 }
 
 void Button::render(SDL_Renderer* renderer)
 {
-	SDL_Rect transformRect = {
-		(int)transform.x,
-		(int)transform.y,
-		transform.w,
-		transform.h
-	};
-	SDL_SetRenderDrawColor(renderer, 70, 75, 90, 255);
-	SDL_RenderFillRect(renderer, &transformRect);
 	text.render(renderer);
 }
 

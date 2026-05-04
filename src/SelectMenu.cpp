@@ -2,16 +2,22 @@
 
 SelectMenu::SelectMenu()
 {
-	buttons.emplace_back("EASY", WINDOW_WIDTH / 2 - 100, 240, 200, 50);
-	buttons.emplace_back("NORMAL", WINDOW_WIDTH / 2 - 100, 320, 200, 50);
-	buttons.emplace_back("HARD", WINDOW_WIDTH / 2 - 100, 400, 200, 50);
-	buttons.emplace_back("BACK", WINDOW_WIDTH / 2 - 100, 500, 200, 50);
+	buttons.emplace_back("EASY", WINDOW_WIDTH / 2 - 100, 310, 1.5f);
+	buttons.emplace_back("NORMAL", WINDOW_WIDTH / 2 - 100, 445, 1.5f);
+	buttons.emplace_back("HARD", WINDOW_WIDTH / 2 - 100, 570, 1.5f);
+	buttons.emplace_back("BACK", 450, 685, 1.0f);
 }
 
 void SelectMenu::start(SDL_Renderer* renderer)
 {
 	for (auto& button : buttons)
 		button.start(renderer);
+	buttons[0].setTextPosition(
+		static_cast<float>(WINDOW_WIDTH) / 2 - buttons[0].transform.w / 2.0f, buttons[0].transform.y);
+	buttons[1].setTextPosition(
+		static_cast<float>(WINDOW_WIDTH) / 2 - buttons[1].transform.w / 2.0f, buttons[1].transform.y);
+	buttons[2].setTextPosition(
+		static_cast<float>(WINDOW_WIDTH) / 2 - buttons[2].transform.w / 2.0f, buttons[2].transform.y);
 }
 
 int SelectMenu::update(float deltaTime)

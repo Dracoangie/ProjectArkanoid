@@ -71,6 +71,8 @@ void Text::setText(const std::string& newText)
 	if (texture)
 		SDL_DestroyTexture(texture);
 	textSurface = TTF_RenderText_Blended(font, text.c_str(), color);
+	if(!textSurface)
+		return;
 	transform.w = textSurface->w;
 	transform.h = textSurface->h;
 }

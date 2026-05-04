@@ -48,6 +48,7 @@ public:
 	void deactivate();
 
 	void setGameBall(bool value, int speed) { gameBall = value; gameBallSpeed = (float)speed; }
+	bool getGameBall() const { return gameBall; }
 	float getSpeedX() const { return speedX; }
 	float getSpeedY() const { return speedY; }
 	void setSpeedX(float newSpeedX) { speedX = newSpeedX; }

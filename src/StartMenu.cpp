@@ -2,14 +2,21 @@
 
 StartMenu::StartMenu()
 {
-	buttons.emplace_back("START", WINDOW_WIDTH / 2 - 100, 240, 200, 50);
-	buttons.emplace_back("HOW TO PLAY", WINDOW_WIDTH / 2 - 100, 320, 200, 50);
+	buttons.emplace_back("START", WINDOW_WIDTH / 2 - 100, 310, 1.75f);
+	buttons.emplace_back("HOW TO PLAY", WINDOW_WIDTH / 2 - 100, 445, 1.75f);
+	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 100, 570, 1.75f);
 }
 
 void StartMenu::start(SDL_Renderer* renderer)
 {
 	for (auto& button : buttons)
 		button.start(renderer);
+	buttons[0].setTextPosition(
+		static_cast<float>(WINDOW_WIDTH) / 2 - buttons[0].transform.w / 2.0f, buttons[0].transform.y);
+	buttons[1].setTextPosition(
+		static_cast<float>(WINDOW_WIDTH) / 2 - buttons[1].transform.w / 2.0f, buttons[1].transform.y);
+	buttons[2].setTextPosition(
+		static_cast<float>(WINDOW_WIDTH) / 2 - buttons[2].transform.w / 2.0f, buttons[2].transform.y);
 }
 
 int StartMenu::update(float deltaTime)
@@ -22,6 +29,8 @@ int StartMenu::update(float deltaTime)
 		return 1; // Start
 	if (buttons[1].isClicked())
 		return 2; // How to play
+	if (buttons[2].isClicked())
+		return 3; // Quit
 	return 0;
 }
 

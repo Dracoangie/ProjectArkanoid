@@ -4,11 +4,7 @@
 
 class HowToPlayMenu : public Menu
 {
-	Text title;
-	Text line1;
-	Text line2;
-	Text line3;
-	Text line4;
+	std::vector<Text> lines;
 
 public:
 	HowToPlayMenu();

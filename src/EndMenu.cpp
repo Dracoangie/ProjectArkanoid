@@ -2,9 +2,12 @@
 
 EndMenu::EndMenu()
 {
-	buttons.emplace_back("RESTART", WINDOW_WIDTH / 2 - 75, WINDOW_HEIGHT / 2 - 80, 150, 50);
-	buttons.emplace_back("MENU", WINDOW_WIDTH / 2 - 75, WINDOW_HEIGHT / 2 , 150, 50);
-	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 75, WINDOW_HEIGHT / 2 + 80, 150, 50);
+	buttons.emplace_back("RESTART", WINDOW_WIDTH / 2 - 75, WINDOW_HEIGHT / 2 - 80, 1.5f);
+	buttons.emplace_back("MENU", WINDOW_WIDTH / 2 - 75, WINDOW_HEIGHT / 2 , 1.5f);
+	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 75, WINDOW_HEIGHT / 2 + 80, 1.5f);
+	buttons[0].transform.y = static_cast<float>(WINDOW_WIDTH) / 2 - buttons[0].transform.w / 2.0f;
+	buttons[1].transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - buttons[1].transform.w / 2.0f;
+	buttons[2].transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - buttons[2].transform.w / 2.0f;
 }
 
 EndMenu::~EndMenu()

@@ -16,6 +16,21 @@ bool StartScene::init()
 	menus["selectMenu"] = std::make_unique<SelectMenu>();
 	menus["howToPlayMenu"] = std::make_unique<HowToPlayMenu>();
 
+	entities["ARKANOIDGREEN"] = std::make_unique<Text>("ARKANOID", WINDOW_WIDTH / 2 - 100, 127, 2.0f);
+	auto textEntity = dynamic_cast<Text*>(entities["ARKANOIDGREEN"].get());
+	textEntity->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	textEntity->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - textEntity->transform.w / 2.0f;
+	textEntity->setColor({ 146, 232, 192, 255 });
+	entities["ARKANOIDBLUE"] = std::make_unique<Text>("ARKANOID", WINDOW_WIDTH / 2 - 100, 133, 2.0f);
+	textEntity = dynamic_cast<Text*>(entities["ARKANOIDBLUE"].get());
+	textEntity->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	textEntity->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - textEntity->transform.w / 2.0f;
+	textEntity->setColor({ 76, 104, 133, 255 });
+	entities["ARKANOID"] = std::make_unique<Text>("ARKANOID", WINDOW_WIDTH / 2 - 100, 130, 2.0f);
+	textEntity = dynamic_cast<Text*>(entities["ARKANOID"].get());
+	textEntity->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	textEntity->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - textEntity->transform.w / 2.0f;
+
 	activateOnly("startMenu");
 
 	return true;
@@ -23,9 +38,12 @@ bool StartScene::init()
 
 void StartScene::start(SDL_Renderer* renderer)
 {
-	backgroundTexture = IMG_LoadTexture(renderer, "assets/Background.png");
+	backgroundTexture = IMG_LoadTexture(renderer, "assets/StartMenu.png");
 	background_sheet = IMG_LoadTexture(renderer, "assets/Background_sheet.png");
 
+
+	for (auto& entity : entities)
+		entity.second->start(renderer);
 	for (auto& menu : menus)
 		menu.second->start(renderer);
 }
@@ -50,7 +68,8 @@ int StartScene::update(float deltaTime)
 
 		waitingMouseRelease = false;
 	}
-
+	for (auto& entity : entities)
+		entity.second->update(deltaTime);
 	for (auto& menu : menus)
 	{
 		int result = menu.second->update(deltaTime);
@@ -94,6 +113,8 @@ void StartScene::render(SDL_Renderer* renderer)
 	if (backgroundTexture)
 		SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
 
+	for (auto& entity : entities)
+		entity.second->render(renderer);
 	for (auto& menu : menus)
 		menu.second->render(renderer);
 

@@ -26,6 +26,11 @@ public:
 	 */
 	void loadLevel(const std::vector<std::vector<int>>& levelData);
 	void reset();
+	void deactivateAllBricks()
+	{
+		for (auto& brick : bricks)
+			brick->active = false;
+	}
 
 	std::vector<Brick*> getActiveBricks();
 };
