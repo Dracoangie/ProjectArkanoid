@@ -59,9 +59,7 @@ class GameScene : public Scene
             file.close();
         }
         else
-        {
             highScore = 0;
-        }
     }
 public:
     GameScene();

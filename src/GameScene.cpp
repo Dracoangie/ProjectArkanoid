@@ -36,7 +36,7 @@ bool GameScene::init()
 	dynamic_cast<Text*>(entities["levelText"].get())->setFont(TTF_OpenFont("assets/fonts/DePixelHalbfett.ttf", 15));
 	entities["LivesText"] = std::make_unique<Text>("LIVES:  2", WINDOW_WIDTH / 2 + 170, 14, 1);
 	dynamic_cast<Text*>(entities["LivesText"].get())->setFont(TTF_OpenFont("assets/fonts/DePixelHalbfett.ttf", 15));
-	entities["highText"] = std::make_unique<Text>("HIGH ESCORE:  " + std::to_string(highScore), WINDOW_WIDTH / 2 + 35, 43, 1);
+	entities["highText"] = std::make_unique<Text>("HIGH SCORE:  " + std::to_string(highScore), WINDOW_WIDTH / 2 + 35, 43, 1);
 	dynamic_cast<Text*>(entities["highText"].get())->setFont(TTF_OpenFont("assets/fonts/DePixelHalbfett.ttf", 9));
 
 	menus["endMenu"] = std::make_unique<EndMenu>();
