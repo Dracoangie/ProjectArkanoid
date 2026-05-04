@@ -88,6 +88,16 @@ int GameScene::update(float deltaTime)
 	escapeWasPressed = escapePressed;
 	if (paused)
 		return 0;
+	if (losingLife)
+	{
+		losingLifeTimer += deltaTime;
+		if(losingLifeTimer >= 1.0f)
+		{
+			losingLife = false;
+			losingLifeTimer = 0.0f;
+			loseLife();
+		}
+	}
 	checkBrickCollisions(deltaTime);
 	checkBarCollisions(deltaTime);
 	checkPowerUpCollisions(deltaTime);
@@ -224,7 +234,10 @@ void GameScene::checkBrickCollisions(float deltaTime)
 		{
 			ballPool->deactiveBall(ball);
 			if(ballPool->getActiveBalls().empty())
-				loseLife();
+			{
+				dynamic_cast<Bar*>(entities["bar"].get())->loseLife();
+				losingLife = true;
+			}
 		}
 		if(breakthroughActive)
 		{
@@ -331,7 +344,7 @@ void GameScene::nextLevel(float deltaTime)
 	{
 		if (level > Levels::levels.size())
 		{
-			 endGame();
+			 endGame(false);
 			 return;
 		}
 		brickPool->loadLevel(Levels::levels[level - 1]);

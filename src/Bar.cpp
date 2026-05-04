@@ -16,15 +16,24 @@ Bar::Bar(int difficulty) : Bar()
 
 Bar::~Bar()
 {
+	if (texture_lose)
+		SDL_DestroyTexture(texture_lose);
 }
 
 void Bar::start(SDL_Renderer* renderer)
 {
 	texture = IMG_LoadTexture(renderer, "assets/Bar.png");
+	texture_lose = IMG_LoadTexture(renderer, "assets/Bar_Lose.png");
 }
 
 void Bar::update(float deltaTime)
 {
+	if (lose)
+	{
+		loseAnimationTimer += deltaTime;
+		return;
+	}
+
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
 	if ((keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_A]) && transform.x > 10)
 		transform.x -= speed * deltaTime;
@@ -40,5 +49,16 @@ void Bar::render(SDL_Renderer* renderer)
 		transform.w,
 		transform.h
 	};
+
+	if (lose)
+	{
+		int destructionFrame = (int)(loseAnimationTimer / 0.1f);
+		SDL_Rect srcRect = {
+			destructionFrame* 60, 0,
+			60, transform.h
+		};
+		SDL_RenderCopy(renderer, texture_lose, &srcRect, &transformRect);
+		return;
+	}
 	SDL_RenderCopy(renderer, texture, NULL, &transformRect);
 }

@@ -82,8 +82,5 @@ namespace Levels {
     const std::vector<std::vector<std::vector<int>>> levels =
     {
         Levels::LEVEL_1,
-        Levels::LEVEL_2,
-        Levels::LEVEL_3,
-		Levels::LEVEL_4
     };
 }

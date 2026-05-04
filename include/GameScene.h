@@ -20,6 +20,8 @@ class GameScene : public Scene
 	bool paused = false;
     bool escapeWasPressed = false;
     bool endGameBool = false;
+    bool losingLife = false;
+    float losingLifeTimer = 0.0f;
 
     float levelTimer = 0.0f;
 
@@ -94,7 +96,7 @@ public:
         lives--;
         if (lives <= 0)
         {
-                endGame();
+            endGame(true);
 			return;
         }
         dynamic_cast<Bar*>(entities["bar"].get())->newLevel();
@@ -105,11 +107,13 @@ public:
         dynamic_cast<Text*>(entities["LivesText"].get())->setText("LIVES:  " + std::to_string(lives));
     }
 
-    void endGame()
+    void endGame(bool lose)
     {
         breakthroughPowerupDuration = 0;
         paused = true;
 		menus["endMenu"]->setIsActive(true);
+		if (lose)
+			dynamic_cast<EndMenu*>(menus["endMenu"].get())->lose();
 		dynamic_cast<BrickPool*>(entities["brickPool"].get())->deactivateAllBricks();
         saveHighScore();
 	}
