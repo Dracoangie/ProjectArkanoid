@@ -2,9 +2,9 @@
 
 StartMenu::StartMenu()
 {
-	buttons.emplace_back("START", WINDOW_WIDTH / 2 - 100, 310, 1.75f);
-	buttons.emplace_back("HOW TO PLAY", WINDOW_WIDTH / 2 - 100, 445, 1.75f);
-	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 100, 570, 1.75f);
+	buttons.emplace_back("START", WINDOW_WIDTH / 2 - 100, 310, 1.f);
+	buttons.emplace_back("HOW TO PLAY", WINDOW_WIDTH / 2 - 100, 445, 1.f);
+	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 100, 570, 1.f);
 }
 
 void StartMenu::start(SDL_Renderer* renderer)

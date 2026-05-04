@@ -18,17 +18,17 @@ bool StartScene::init()
 
 	entities["ARKANOIDGREEN"] = std::make_unique<Text>("ARKANOID", WINDOW_WIDTH / 2 - 100, 127, 2.0f);
 	auto textEntity = dynamic_cast<Text*>(entities["ARKANOIDGREEN"].get());
-	textEntity->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	textEntity->setFont(FontType::Title);
 	textEntity->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - textEntity->transform.w / 2.0f;
 	textEntity->setColor({ 146, 232, 192, 255 });
 	entities["ARKANOIDBLUE"] = std::make_unique<Text>("ARKANOID", WINDOW_WIDTH / 2 - 100, 133, 2.0f);
 	textEntity = dynamic_cast<Text*>(entities["ARKANOIDBLUE"].get());
-	textEntity->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	textEntity->setFont(FontType::Title);
 	textEntity->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - textEntity->transform.w / 2.0f;
 	textEntity->setColor({ 76, 104, 133, 255 });
 	entities["ARKANOID"] = std::make_unique<Text>("ARKANOID", WINDOW_WIDTH / 2 - 100, 130, 2.0f);
 	textEntity = dynamic_cast<Text*>(entities["ARKANOID"].get());
-	textEntity->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	textEntity->setFont(FontType::Title);
 	textEntity->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - textEntity->transform.w / 2.0f;
 
 	activateOnly("startMenu");

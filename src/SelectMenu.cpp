@@ -2,10 +2,10 @@
 
 SelectMenu::SelectMenu()
 {
-	buttons.emplace_back("EASY", WINDOW_WIDTH / 2 - 100, 310, 1.5f);
-	buttons.emplace_back("NORMAL", WINDOW_WIDTH / 2 - 100, 445, 1.5f);
-	buttons.emplace_back("HARD", WINDOW_WIDTH / 2 - 100, 570, 1.5f);
-	buttons.emplace_back("BACK", 450, 685, 1.0f);
+	buttons.emplace_back("EASY", WINDOW_WIDTH / 2 - 100, 310, 1.f);
+	buttons.emplace_back("NORMAL", WINDOW_WIDTH / 2 - 100, 445, 1.f);
+	buttons.emplace_back("HARD", WINDOW_WIDTH / 2 - 100, 570, 1.f);
+	buttons.emplace_back("BACK", 450, 685, 0.75f);
 }
 
 void SelectMenu::start(SDL_Renderer* renderer)

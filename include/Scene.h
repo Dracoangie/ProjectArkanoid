@@ -1,5 +1,6 @@
 #pragma once
 
+#include "DebugMemory.h"
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -11,7 +12,6 @@
 #include "LevelData.h"
 #include "EndMenu.h"
 #include "PowerUpPool.h"
-
 #include <unordered_map>
 
 struct Color

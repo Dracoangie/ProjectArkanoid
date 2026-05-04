@@ -1,13 +1,10 @@
 #include "Button.h"
 
-Button::Button(const std::string& buttonText, float x, float y, float scale)
+Button::Button(const std::string& buttonText, float x, float y, float scale) : text(buttonText, x + 10, y + 10, scale)
 {
 	transform.x = x;
 	transform.y = y;
-	transform.w = x;
-	transform.h = y;
-	text = Text(buttonText, x + 10, y + 10, scale);
-	text.setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 24));
+	text.setFont(FontType::Title);
 	transform.w = text.transform.w + 20;
 	transform.h = text.transform.h + 20;
 }

@@ -3,7 +3,7 @@
 GameScene::GameScene()
 {
 	press = std::make_unique<Text>("PRESS SPACE TO START", WINDOW_WIDTH / 2 - 100, WINDOW_HEIGHT / 2 + 200, 1.0f);
-	press->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 24));
+	press->setFont(FontType::Title);
 	press->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - press->transform.w / 2.0f;
 	press->setColor({ 255, 255, 255, 100 });
 
@@ -31,14 +31,14 @@ bool GameScene::init()
 	entities["brickPool"] = std::make_unique<BrickPool>();
 	entities["powerUpPool"] = std::make_unique<PowerUpPool>();
 
-	entities["scoreText"] = std::make_unique<Text>("SCORE:  0", 20, 20, 1);
-	entities["levelText"] = std::make_unique<Text>("LEVEL:  1", WINDOW_WIDTH /2 + 35, 14, 1);
-	dynamic_cast<Text*>(entities["levelText"].get())->setFont(TTF_OpenFont("assets/fonts/DePixelHalbfett.ttf", 15));
-	entities["LivesText"] = std::make_unique<Text>("LIVES:  2", WINDOW_WIDTH / 2 + 170, 14, 1);
-	dynamic_cast<Text*>(entities["LivesText"].get())->setFont(TTF_OpenFont("assets/fonts/DePixelHalbfett.ttf", 15));
-	entities["highText"] = std::make_unique<Text>("HIGH SCORE:  " + std::to_string(highScore), WINDOW_WIDTH / 2 + 35, 43, 1);
-	dynamic_cast<Text*>(entities["highText"].get())->setFont(TTF_OpenFont("assets/fonts/DePixelHalbfett.ttf", 9));
-
+	entities["scoreText"] = std::make_unique<Text>("SCORE:  0", 20, 20, 1.0f);
+	dynamic_cast<Text*>(entities["scoreText"].get())->setText("SCORE:  " + std::to_string(score));
+	entities["levelText"] = std::make_unique<Text>("LEVEL:  1", WINDOW_WIDTH /2 + 35, 14, 0.6f);
+	dynamic_cast<Text*>(entities["levelText"].get())->setText("LEVEL:  " + std::to_string(level));
+	entities["LivesText"] = std::make_unique<Text>("LIVES:  2", WINDOW_WIDTH / 2 + 170, 14, 0.6f);
+	dynamic_cast<Text*>(entities["LivesText"].get())->setText("LIVES:  " + std::to_string(lives));
+	entities["highText"] = std::make_unique<Text>("HIGH SCORE:  " + std::to_string(highScore), WINDOW_WIDTH / 2 + 35, 43, 0.35f);
+	dynamic_cast<Text*>(entities["highText"].get())->setText("HIGH SCORE::  " + std::to_string(highScore));
 	menus["endMenu"] = std::make_unique<EndMenu>();
 	menus["pauseMenu"] = std::make_unique<PauseMenu>();
 

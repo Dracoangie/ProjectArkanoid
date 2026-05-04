@@ -3,12 +3,12 @@
 PauseMenu::PauseMenu()
 {
 	title = std::make_unique<Text>("PAUSED", 0, 150, 2.0f);
-	title->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	title->setFont(FontType::Title);
 	title->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - title->transform.w / 2.0f;
 	title->setColor({ 146, 232, 192, 255 });
-	buttons.emplace_back("RESTART", WINDOW_WIDTH / 2 - 100, 310, 1.75f);
-	buttons.emplace_back("MAIN MENU", WINDOW_WIDTH / 2 - 100, 375, 1.75f);
-	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 100, 440, 1.75f);
+	buttons.emplace_back("RESTART", WINDOW_WIDTH / 2 - 100, 310, 1.f);
+	buttons.emplace_back("MAIN MENU", WINDOW_WIDTH / 2 - 100, 375, 1.f);
+	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 100, 440, 1.f);
 }
 
 void PauseMenu::start(SDL_Renderer* renderer)

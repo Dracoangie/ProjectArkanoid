@@ -3,22 +3,22 @@
 HowToPlayMenu::HowToPlayMenu()
 {
 	lines.emplace_back("MOVE THE BAR WITH LEFT AND RIGHT ARROWS", 60, 290, 0.5f);
-	lines.back().setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 15));
+	lines.back().setFont(FontType::Title);
 	lines.back().transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - lines.back().transform.w / 2.0f;
 	lines.emplace_back("OR AD KEYS.", 60, 320, 0.5f);
-	lines.back().setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 15));
+	lines.back().setFont(FontType::Title);
 	lines.back().transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - lines.back().transform.w / 2.0f;
 	lines.emplace_back("BOUNCE THE BALL TO DESTROY BRICKS.", 60, 375, 0.5f);
-	lines.back().setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 15));
+	lines.back().setFont(FontType::Title);
 	lines.back().transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - lines.back().transform.w / 2.0f;
 	lines.emplace_back("DO NOT LET THE BALL FALL.", 60, 425, 0.5f);
-	lines.back().setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 15));
+	lines.back().setFont(FontType::Title);
 	lines.back().transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - lines.back().transform.w / 2.0f;
 	lines.emplace_back("DESTROY ALL BRICKS TO WIN.", 60, 475, 0.5f);
-	lines.back().setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 15));
+	lines.back().setFont(FontType::Title);
 	lines.back().transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - lines.back().transform.w / 2.0f;
 	lines.emplace_back("PICK UP THE POWER UPS TO HELP YOU WIN.", 60, 525, 0.5f);
-	lines.back().setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 15));
+	lines.back().setFont(FontType::Title);
 	lines.back().transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - lines.back().transform.w / 2.0f;
 
 	buttons.emplace_back("BACK", 450, 685, 1.0f);

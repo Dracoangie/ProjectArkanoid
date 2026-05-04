@@ -3,12 +3,12 @@
 EndMenu::EndMenu()
 {
 	title = std::make_unique<Text>("YOU WIN", 0, 175, 2.0f);
-	title->setFont(TTF_OpenFont("assets/fonts/04B30.ttf", 70));
+	title->setFont(FontType::Title);
 	title->transform.x = static_cast<float>(WINDOW_WIDTH) / 2 - title->transform.w / 2.0f;
 	title->setColor({ 146, 232, 192, 255 });
-	buttons.emplace_back("RESTART", WINDOW_WIDTH / 2 - 100, 335, 1.75f);
-	buttons.emplace_back("MAIN MENU", WINDOW_WIDTH / 2 - 100, 400, 1.75f);
-	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 100, 465, 1.75f);
+	buttons.emplace_back("RESTART", WINDOW_WIDTH / 2 - 100, 335, 1.f);
+	buttons.emplace_back("MAIN MENU", WINDOW_WIDTH / 2 - 100, 400, 1.f);
+	buttons.emplace_back("QUIT", WINDOW_WIDTH / 2 - 100, 465, 1.f);
 }
 
 void EndMenu::start(SDL_Renderer* renderer)

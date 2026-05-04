@@ -15,6 +15,12 @@ public:
 	void update(float deltaTime) override;
 	void render(SDL_Renderer* renderer) override;
 
+	Button(const Button&) = delete;
+	Button& operator=(const Button&) = delete;
+
+	Button(Button&&) noexcept = default;
+	Button& operator=(Button&&) noexcept = default;
+
 	void setTextPosition(float x, float y)
 	{
 		text.transform.x = x + 10;
