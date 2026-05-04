@@ -25,3 +25,5 @@ A classic Arkanoid implementation developed in **C++** using the **SDL2** librar
 
 ## Author
 *   **Dracoangie** - [GitHub](https://github.com/Dracoangie)
+
+*	All assets were created by me and are available for free use.
