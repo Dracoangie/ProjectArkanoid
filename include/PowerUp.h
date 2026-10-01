@@ -8,7 +8,8 @@ enum PowerUpType
 	SpeedDown,
 	ExtraLife,
 	ExtraBall,
-	Breakthrough
+	Breakthrough,
+	AmountOfPowerUps
 };
 
 class PowerUp : public Entity

@@ -36,7 +36,7 @@ void PowerUpPool::spawnPowerUp(float x, float y)
 		{
 			powerUp->transform.x = x;
 			powerUp->transform.y = y;
-			powerUp->activate(static_cast<PowerUpType>(rand() % 5));
+			powerUp->activate(static_cast<PowerUpType>(rand() % PowerUpType::AmountOfPowerUps));
 			return;
 		}
 	}
