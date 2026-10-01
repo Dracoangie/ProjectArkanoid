@@ -31,14 +31,33 @@ bool GameScene::init()
 	entities["brickPool"] = std::make_unique<BrickPool>();
 	entities["powerUpPool"] = std::make_unique<PowerUpPool>();
 
-	entities["scoreText"] = std::make_unique<Text>("SCORE:  0", 20, 20, 1.0f);
-	dynamic_cast<Text*>(entities["scoreText"].get())->setText("SCORE:  " + std::to_string(score));
-	entities["levelText"] = std::make_unique<Text>("LEVEL:  1", WINDOW_WIDTH /2 + 35, 14, 0.6f);
-	dynamic_cast<Text*>(entities["levelText"].get())->setText("LEVEL:  " + std::to_string(level));
-	entities["LivesText"] = std::make_unique<Text>("LIVES:  2", WINDOW_WIDTH / 2 + 170, 14, 0.6f);
-	dynamic_cast<Text*>(entities["LivesText"].get())->setText("LIVES:  " + std::to_string(lives));
-	entities["highText"] = std::make_unique<Text>("HIGH SCORE:  " + std::to_string(highScore), WINDOW_WIDTH / 2 + 35, 43, 0.35f);
-	dynamic_cast<Text*>(entities["highText"].get())->setText("HIGH SCORE::  " + std::to_string(highScore));
+	auto text = std::make_unique<Text>(
+		"SCORE:  " + std::to_string(score), 20, 20, 1.0f);
+	scoreText = text.get();
+	entities["scoreText"] = std::move(text);
+	scoreText->setText("SCORE:  " + std::to_string(score));
+
+	auto levelLabel = std::make_unique<Text>(
+		"LEVEL:  " + std::to_string(level),
+		WINDOW_WIDTH / 2 + 35, 14, 0.6f);
+	levelText = levelLabel.get();
+	entities["levelText"] = std::move(levelLabel);
+	levelText->setText("LEVEL:  " + std::to_string(level));
+
+	auto livesLabel = std::make_unique<Text>(
+		"LIVES:  " + std::to_string(lives),
+		WINDOW_WIDTH / 2 + 170, 14, 0.6f);
+	livesText = livesLabel.get();
+	entities["LivesText"] = std::move(livesLabel);
+	livesText->setText("LIVES:  " + std::to_string(lives));
+
+	auto highLabel = std::make_unique<Text>(
+		"HIGH SCORE:  " + std::to_string(highScore),
+		WINDOW_WIDTH / 2 + 35, 43, 0.35f);
+	highText = highLabel.get();
+	entities["highText"] = std::move(highLabel);
+	highText->setText("HIGH SCORE::  " + std::to_string(highScore));
+
 	menus["endMenu"] = std::make_unique<EndMenu>();
 	menus["pauseMenu"] = std::make_unique<PauseMenu>();
 
@@ -334,7 +353,7 @@ void GameScene::nextLevel(float deltaTime)
 	if (levelTimer < 1.5f)
 		return;
 	level++;
-	auto levelText = dynamic_cast<Text*>(entities["levelText"].get());
+	levelText->setText("LEVEL:  " + std::to_string(level));
 	if (bar)
 		bar->newLevel();
 	if (ballPool)

@@ -35,6 +35,11 @@ class GameScene : public Scene
     int level = 1;
 	int lives = 2;
 
+    Text* scoreText = nullptr;
+    Text* levelText = nullptr;
+    Text* livesText = nullptr;
+    Text* highText = nullptr;
+
     void checkBrickCollisions(float deltaTime);
     void checkBarCollisions(float deltaTime);
     void checkPowerUpCollisions(float deltaTime);
@@ -77,15 +82,12 @@ public:
     void increaseScore(int points)
     {
         score += points * dificulty;
-        auto scoreText = dynamic_cast<Text*>(entities["scoreText"].get());
-        if (scoreText)
-            scoreText->setText("SCORE:  " + std::to_string(score));
-        if(score > highScore)
+        scoreText->setText("SCORE:  " + std::to_string(score));
+
+        if (score > highScore)
         {
             highScore = score;
-            auto highText = dynamic_cast<Text*>(entities["highText"].get());
-            if (highText)
-                highText->setText("HIGH SCORE:  " + std::to_string(highScore));
+            highText->setText("HIGH SCORE:  " + std::to_string(highScore));
         }
     }
 
@@ -104,7 +106,7 @@ public:
         ballPool->reset();
 		ballPool->newLevel();
 
-        dynamic_cast<Text*>(entities["LivesText"].get())->setText("LIVES:  " + std::to_string(lives));
+        livesText->setText("LIVES:  " + std::to_string(lives));
     }
 
     void endGame(bool lose)
@@ -150,6 +152,7 @@ public:
     void increaseLife()
     {
         lives++;
+        livesText->setText("LIVES:  " + std::to_string(lives));
     }
 
     void slowDownBall(float multiplier)
