@@ -25,11 +25,25 @@ bool GameScene::init()
 {
 	loadHighScore();
 
-	entities["bar"] = std::make_unique<Bar>(dificulty);
+	auto barEntity = std::make_unique<Bar>(dificulty);
+	bar = barEntity.get();
+	entities["bar"] = std::move(barEntity);
 
-	entities["ballPool"] = std::make_unique<BallPool>(dificulty);
-	entities["brickPool"] = std::make_unique<BrickPool>();
-	entities["powerUpPool"] = std::make_unique<PowerUpPool>();
+	auto balls = std::make_unique<BallPool>(dificulty);
+	ballPool = balls.get();
+	entities["ballPool"] = std::move(balls);
+
+	auto bricks = std::make_unique<BrickPool>();
+	brickPool = bricks.get();
+	entities["brickPool"] = std::move(bricks);
+
+	auto powerUps = std::make_unique<PowerUpPool>();
+	powerUpPool = powerUps.get();
+	entities["powerUpPool"] = std::move(powerUps);
+
+	auto menu = std::make_unique<EndMenu>();
+	endMenu = menu.get();
+	menus["endMenu"] = std::move(menu);
 
 	auto text = std::make_unique<Text>(
 		"SCORE:  " + std::to_string(score), 20, 20, 1.0f);
@@ -58,7 +72,6 @@ bool GameScene::init()
 	entities["highText"] = std::move(highLabel);
 	highText->setText("HIGH SCORE::  " + std::to_string(highScore));
 
-	menus["endMenu"] = std::make_unique<EndMenu>();
 	menus["pauseMenu"] = std::make_unique<PauseMenu>();
 
 	return true;
@@ -122,7 +135,6 @@ int GameScene::update(float deltaTime)
 	checkPowerUpCollisions(deltaTime);
 	if(breakthroughActive)
 	{
-		auto bar = dynamic_cast<Bar*>(entities["bar"].get());
 		if(bar->transform.x + bar->transform.w >= WINDOW_WIDTH - 20)
 			nextLevel(deltaTime);
 
@@ -133,7 +145,6 @@ int GameScene::update(float deltaTime)
 		if(slowdownPowerupDuration >= 5.0f)
 		{
 			slowdownActive = false;
-			auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
 			if (ballPool)
 				ballPool->resetSpeed();
 			slowdownPowerupDuration = 0.0f;
@@ -189,9 +200,6 @@ void GameScene::render(SDL_Renderer* renderer)
 
 void GameScene::checkBrickCollisions(float deltaTime)
 {
-	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
-	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
-	auto powerUpPool = dynamic_cast<PowerUpPool*>(entities["powerUpPool"].get());
 
 	if (levelTimer > 0.0f)
 	{
@@ -254,7 +262,7 @@ void GameScene::checkBrickCollisions(float deltaTime)
 			ballPool->deactiveBall(ball);
 			if(ballPool->getActiveBalls().empty())
 			{
-				dynamic_cast<Bar*>(entities["bar"].get())->loseLife();
+				bar->loseLife();
 				losingLife = true;
 			}
 		}
@@ -273,9 +281,6 @@ void GameScene::checkBrickCollisions(float deltaTime)
 
 void GameScene::checkBarCollisions(float deltaTime)
 {
-	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
-	auto bar = dynamic_cast<Bar*>(entities["bar"].get());
-
 	for (auto& ball : ballPool->getActiveBalls())
 	{
 		if (ball->getSpeedY() <= 0)
@@ -307,8 +312,6 @@ void GameScene::checkBarCollisions(float deltaTime)
 
 void GameScene::checkPowerUpCollisions(float deltaTime)
 {
-	auto powerUpPool = dynamic_cast<PowerUpPool*>(entities["powerUpPool"].get());
-	auto bar = dynamic_cast<Bar*>(entities["bar"].get());
 	for (auto& powerUp : powerUpPool->getActivePowerUps())
 	{
 		if (!CollisionCheck(&powerUp->transform, &bar->transform))
@@ -340,9 +343,6 @@ void GameScene::checkPowerUpCollisions(float deltaTime)
 void GameScene::nextLevel(float deltaTime)
 {
 	breakthroughActive = false;
-	auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
-	auto powerUpPool = dynamic_cast<PowerUpPool*>(entities["powerUpPool"].get());
-	auto bar = dynamic_cast<Bar*>(entities["bar"].get());
 	if (levelTimer == 0)
 	{
 		ballPool->reset();
@@ -358,7 +358,6 @@ void GameScene::nextLevel(float deltaTime)
 		bar->newLevel();
 	if (ballPool)
 		ballPool->newLevel();
-	auto brickPool = dynamic_cast<BrickPool*>(entities["brickPool"].get());
 	if (brickPool)
 	{
 		if (level > Levels::levels.size())

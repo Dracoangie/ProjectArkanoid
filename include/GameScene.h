@@ -35,6 +35,12 @@ class GameScene : public Scene
     int level = 1;
 	int lives = 2;
 
+    Bar* bar = nullptr;
+    BallPool* ballPool = nullptr;
+    BrickPool* brickPool = nullptr;
+    PowerUpPool* powerUpPool = nullptr;
+    EndMenu* endMenu = nullptr;
+
     Text* scoreText = nullptr;
     Text* levelText = nullptr;
     Text* livesText = nullptr;
@@ -96,16 +102,16 @@ public:
     void loseLife()
     {
         lives--;
+
         if (lives <= 0)
         {
             endGame(true);
-			return;
+            return;
         }
-        dynamic_cast<Bar*>(entities["bar"].get())->newLevel();
-        auto ballPool = dynamic_cast<BallPool*>(entities["ballPool"].get());
-        ballPool->reset();
-		ballPool->newLevel();
 
+        bar->newLevel();
+        ballPool->reset();
+        ballPool->newLevel();
         livesText->setText("LIVES:  " + std::to_string(lives));
     }
 
@@ -113,12 +119,14 @@ public:
     {
         breakthroughPowerupDuration = 0;
         paused = true;
-		menus["endMenu"]->setIsActive(true);
-		if (lose)
-			dynamic_cast<EndMenu*>(menus["endMenu"].get())->lose();
-		dynamic_cast<BrickPool*>(entities["brickPool"].get())->deactivateAllBricks();
+        endMenu->setIsActive(true);
+
+        if (lose)
+            endMenu->lose();
+
+        brickPool->deactivateAllBricks();
         saveHighScore();
-	}
+    }
 
     void setDificulty(int newDificulty)
     {
